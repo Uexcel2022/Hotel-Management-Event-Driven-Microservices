@@ -1,4 +1,4 @@
-package com.uexcel.bookingservice.command;
+package com.uexcel.bookingservice.command.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class Checkin {
     @Id
-    private String id;
+    private String checkinId;
     private String roomNumber;
     private String checkinDate;
     private String checkinTime;

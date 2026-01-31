@@ -1,7 +1,7 @@
-package com.uexcel.bookingservice.command;
+package com.uexcel.bookingservice.command.repository;
 
+import com.uexcel.bookingservice.command.entity.Checkin;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository

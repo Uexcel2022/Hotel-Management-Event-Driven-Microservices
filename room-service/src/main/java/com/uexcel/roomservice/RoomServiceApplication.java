@@ -1,7 +1,11 @@
 package com.uexcel.roomservice;
 
+import com.uexcel.roomservice.command.interceptor.RoomCreateCommandInterceptor;
+import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
 public class RoomServiceApplication {
@@ -10,4 +14,8 @@ public class RoomServiceApplication {
 		SpringApplication.run(RoomServiceApplication.class, args);
 	}
 
+@Autowired
+	public void registerInterceptor(ApplicationContext context, CommandGateway commandGateway){
+		commandGateway.registerDispatchInterceptor(context.getBean(RoomCreateCommandInterceptor.class));
+	}
 }

@@ -30,7 +30,11 @@
 
     <!-- 2️⃣ Project dependencies (NO versions needed) -->
     <dependencies>
-
+        <dependency>
+            <groupId>com.uexcel</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
         <!-- Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

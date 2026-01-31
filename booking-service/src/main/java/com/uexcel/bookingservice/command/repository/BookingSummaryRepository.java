@@ -1,4 +1,4 @@
-package com.uexcel.bookingservice.command;
+package com.uexcel.bookingservice.command.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

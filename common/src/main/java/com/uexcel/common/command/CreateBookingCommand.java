@@ -1,4 +1,4 @@
-package com.uexcel.bookingservice.command;
+package com.uexcel.common.command;
 
 import lombok.Builder;
 import lombok.Data;
@@ -11,8 +11,9 @@ import java.time.LocalTime;
 @Data
 public class CreateBookingCommand {
     @TargetAggregateIdentifier
-    private final String type;
+    private final String bookingId;
     private final LocalDate date;
     private final int numberOfRoom;
     private final LocalTime numberOfDays;
+    private final String roomTypeId;
 }
