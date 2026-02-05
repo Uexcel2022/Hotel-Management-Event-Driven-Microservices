@@ -1,29 +1,37 @@
 package com.uexcel.roomservice.query;
 
+import com.uexcel.common.event.ReservationCreatedEvent;
+import com.uexcel.common.event.ReservationUpdatedEvent;
+import com.uexcel.roomservice.command.entity.Reservation;
 import com.uexcel.roomservice.command.entity.Room;
+import com.uexcel.roomservice.command.repository.ReservationRepository;
 import com.uexcel.roomservice.command.repository.RoomRepository;
 import com.uexcel.roomservice.command.room.RoomCreatedEvent;
-import com.uexcel.roomservice.command.roomtype.CreateRoomTypeCommand;
 import com.uexcel.roomservice.command.entity.RoomType;
 import com.uexcel.roomservice.command.repository.RoomTypeRepository;
 import com.uexcel.roomservice.command.roomtype.RoomTypeCreatedEvent;
+import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 @Component
+@ProcessingGroup("room-group")
 public class RoomEventHandler {
     private final RoomTypeRepository roomTypeRepository;
-    private final RoomRepository  roomRepository;
+    private final RoomRepository roomRepository;
+    private final ReservationRepository reservationRepository;
 
-    public RoomEventHandler(RoomTypeRepository roomTypeRepository, RoomRepository repository, RoomRepository roomRepository) {
+    public RoomEventHandler(RoomTypeRepository roomTypeRepository,
+                            RoomRepository repository, RoomRepository roomRepository,
+                            ReservationRepository reservationRepository) {
         this.roomTypeRepository = roomTypeRepository;
-
         this.roomRepository = roomRepository;
+        this.reservationRepository = reservationRepository;
     }
 
     @EventHandler
-    public void  onCreate(RoomCreatedEvent command) {
+    public void onCreate(RoomCreatedEvent command) {
         Room room = new Room();
         BeanUtils.copyProperties(command, room);
         roomRepository.save(room);
@@ -35,4 +43,24 @@ public class RoomEventHandler {
         BeanUtils.copyProperties(event, roomType);
         roomTypeRepository.save(roomType);
     }
+
+
+    @EventHandler
+    public void onChange(ReservationCreatedEvent event) {
+        Reservation reservation = new Reservation();
+        BeanUtils.copyProperties(event, reservation);
+        reservationRepository.save(reservation);
+    }
+
+    @EventHandler
+    public void onChange(ReservationUpdatedEvent event) {
+        Reservation reservedRooms = reservationRepository.
+                findByRoomTypeIdAndBookingDate(
+                        event.getRoomTypeId(),  event.getBookingDate()
+                );
+        reservedRooms.setAvailableRooms(event.getAvailableRooms());
+        reservationRepository.save(reservedRooms);
+    }
 }
+
+

@@ -31,10 +31,6 @@
 	<!-- 2️⃣ Project dependencies (NO versions needed) -->
 	<dependencies>
 
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-		</dependency>
 
 		<!-- Spring Boot -->
 		<dependency>
@@ -54,30 +50,28 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
+<!--		<dependency>-->
+<!--			<groupId>com.google.guava</groupId>-->
+<!--			<artifactId>guava</artifactId>-->
+<!--		</dependency>-->
+
 		<!-- Axon -->
 		<dependency>
 			<groupId>org.axonframework</groupId>
 			<artifactId>axon-spring-boot-starter</artifactId>
 		</dependency>
 
-		<!-- Internal Common Library -->
-<!--		<dependency>-->
-<!--			<groupId>com.example</groupId>-->
-<!--			<artifactId>common-lib</artifactId>-->
-<!--		</dependency>-->
-
-		<!-- Lombok (compile-time only) -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- H2 (test only) -->
+		<!-- H2 -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<scope>test</scope>
+			<scope>runtime</scope>
 		</dependency>
 
 		<!-- Testing -->
@@ -86,12 +80,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-
 	</dependencies>
 
 	<!-- 3️⃣ Build configuration -->

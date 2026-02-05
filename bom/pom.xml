@@ -25,8 +25,9 @@
         <spring-cloud.version>2023.0.3</spring-cloud.version>
         <h2.version>2.2.224</h2.version>
         <lombok.version>1.18.34</lombok.version>
-        <axon.version>4.10.1</axon.version>
-        <commons-lang3.version>3.14.0</commons-lang3.version>
+        <axon.version>4.12.2</axon.version>
+        <guava.version>33.3.0-jre</guava.version>
+
     </properties>
 
     <dependencyManagement>
@@ -50,13 +51,6 @@
                 <scope>import</scope>
             </dependency>
 
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>${commons-lang3.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
 
             <!-- Axon Framework -->
             <dependency>
@@ -79,13 +73,6 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
-            </dependency>
-
-            <!-- Common Internal Library -->
-            <dependency>
-                <groupId>com.example</groupId>
-                <artifactId>common-lib</artifactId>
-                <version>${common-lib.version}</version>
             </dependency>
 
         </dependencies>

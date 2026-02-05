@@ -17,6 +17,11 @@ spring:
 axon:
   axonserver:
     servers: localhost:8124
+  eventhandling:
+    processors:
+      booking-group:
+        mode: subscribing
+
 
 server:
   port: 8084

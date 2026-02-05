@@ -1,4 +1,5 @@
 package com.uexcel.bookingservice.command.entity;
+import com.uexcel.common.BookingStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -12,10 +13,16 @@ import java.time.LocalTime;
 @Data
 public class Booking {
     @Id
-    private String BookingId;
-    private  String roomTypeId;
-    private LocalDate date;
+    private String bookingId;
+    private String roomTypeId;
+    private String customerName;
+    private String mobileNumber;
+    private LocalDate bookingDate;
     private int numberOfRoom;
-    private LocalTime numberOfDays;
+    private int numberOfDays;
+    @Enumerated(EnumType.STRING)
+    private BookingStatus bookingStatus;
 
 }
+
+

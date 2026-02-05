@@ -2,14 +2,16 @@ package com.uexcel.roomservice.command.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import lombok.Data;
 
 import java.time.LocalDate;
 
 @Entity
-public class BookingSummary {
+@Data
+public class Reservation {
     @Id
-    private String bookingSummaryId;
+    private String reservationId;
     private String roomTypeId;
-    private int bookedQuantity;
-    public LocalDate bookingDate;
+    private int availableRooms;
+    private LocalDate bookingDate;
 }

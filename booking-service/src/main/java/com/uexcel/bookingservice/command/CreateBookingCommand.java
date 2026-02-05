@@ -1,5 +1,6 @@
-package com.uexcel.common.command;
+package com.uexcel.bookingservice.command;
 
+import com.uexcel.common.BookingStatus;
 import lombok.Builder;
 import lombok.Data;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
@@ -12,8 +13,11 @@ import java.time.LocalTime;
 public class CreateBookingCommand {
     @TargetAggregateIdentifier
     private final String bookingId;
-    private final LocalDate date;
+    private final LocalDate bookingDate;
+    private final String customerName;
+    private final String mobileNumber;
     private final int numberOfRoom;
-    private final LocalTime numberOfDays;
+    private final int numberOfDays;
     private final String roomTypeId;
+    private final BookingStatus bookingStatus;
 }

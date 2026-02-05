@@ -24,6 +24,19 @@ public class GlobalErrorHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(CommandExecutionException.class)
+    public ResponseEntity<ErrorResponse>
+    handleCommandExecutionException(CommandExecutionException exception, WebRequest webRequest) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                timestamp(),HttpStatus.BAD_REQUEST.value(), exception.getMessage(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase().toLowerCase()
+                ,webRequest.getDescription(false).split("=")[1]
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+
+
 
     private String timestamp() {
 
