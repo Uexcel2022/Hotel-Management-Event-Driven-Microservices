@@ -33,6 +33,7 @@ public class AxonConfig {
                 "com.uexcel.roomservice.command.interceptor.*",
                 "com.uexcel.roomservice.query.*",
                 "com.uexcel.roomservice.command.controller.*",
+                "com.uexcel.roomservice.command.inventory.*",
                 "java.util.*", "java.lang.*"
         });
         return xStream;

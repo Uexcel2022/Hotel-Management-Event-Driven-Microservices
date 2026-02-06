@@ -1,10 +1,10 @@
 package com.uexcel.roomservice.command.interceptor;
 
 
-import com.uexcel.common.command.CreateApproveBookingCommand;
-import com.uexcel.common.event.BookingNotApprovedEvent;
-import com.uexcel.roomservice.command.entity.Reservation;
-import com.uexcel.roomservice.command.repository.ReservationRepository;
+import com.uexcel.common.command.CreateRoomReserveCommand;
+import com.uexcel.common.event.RoomReservationRejectedEvent;
+import com.uexcel.roomservice.command.entity.RoomInventoryForDate;
+import com.uexcel.roomservice.command.repository.RoomInventoryForDateRepository;
 import org.axonframework.commandhandling.CommandMessage;
 import org.axonframework.eventhandling.EventBus;
 import org.axonframework.eventhandling.GenericEventMessage;
@@ -15,18 +15,18 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.Map;
 
 @Component
 public class CommandHandlerInterceptor
         implements MessageHandlerInterceptor<CommandMessage<?>> {
 
     private final EventBus eventBus;
-    private final ReservationRepository reservationRepository;
+    private final RoomInventoryForDateRepository roomInventoryForDateRepository;
 
-    public CommandHandlerInterceptor(EventBus eventBus, ReservationRepository reservationRepository) {
+    public CommandHandlerInterceptor(EventBus eventBus,
+                                     RoomInventoryForDateRepository roomInventoryForDateRepository) {
         this.eventBus = eventBus;
-        this.reservationRepository = reservationRepository;
+        this.roomInventoryForDateRepository = roomInventoryForDateRepository;
     }
 
     @Override
@@ -34,61 +34,44 @@ public class CommandHandlerInterceptor
                          @NonNull InterceptorChain chain) throws Exception {
 
         CommandMessage<?> cmd = uow.getMessage();
-        if (cmd.getPayload() instanceof CreateApproveBookingCommand command) {
-            Reservation reservedRooms = reservationRepository
-                    .findByRoomTypeIdAndBookingDate(command.getRoomTypeId(), command.getBookingDate());
-            if (reservedRooms == null || LocalDate.now().isAfter(command.getBookingDate())) {
-                BookingNotApprovedEvent rejectedEvent = new BookingNotApprovedEvent(
-                        command.getReservationId(),
-                        command.getRoomTypeId(),
-                        command.getBookingId(),
-                        command.getBookedQuantity(),
-                        command.getBookingDate(),
-                        command.getCheckinCount(),
-                        "Invalid room type ID or Past date!"
-                );
-                eventBus.publish(
-                        GenericEventMessage.asEventMessage(rejectedEvent));
+        if (cmd.getPayload() instanceof CreateRoomReserveCommand command) {
+            RoomInventoryForDate roomInventoryForDate = roomInventoryForDateRepository
+                    .findByRoomInventoryForDateId(command.getRoomInventoryForDateId());
+            if (roomInventoryForDate == null || LocalDate.now().isAfter(command.getBookingDate())) {
+                publishError(command,eventBus,"Invalid room type reservation ID or Past date!");
                 return null;
 
             } else {
-                boolean currentAvailableRooms = reservedRooms.getAvailableRooms() < command.getBookedQuantity();
+                boolean currentAvailableRooms = roomInventoryForDate.getAvailableRooms() < command.getBookedQuantity();
                 if (currentAvailableRooms) {
-                    BookingNotApprovedEvent rejectedEvent = new BookingNotApprovedEvent(
-                            command.getReservationId(),
-                            command.getRoomTypeId(),
-                            command.getBookingId(),
-                            command.getBookedQuantity(),
-                            command.getBookingDate(),
-                            command.getCheckinCount(),
-                            "Insufficient number of available rooms!"
-                    );
-                    eventBus.publish(GenericEventMessage.asEventMessage(rejectedEvent));
-                    return null; // or throw, see below
+
+                    publishError(command,eventBus,"Insufficient number of available rooms!");
+                    return null;
                 }else {
-                    CommandMessage<?> original = uow.getMessage();
-
-                    CreateApproveBookingCommand oldPayload = (CreateApproveBookingCommand) original.getPayload();
-                    CreateApproveBookingCommand newPayload = CreateApproveBookingCommand.builder()
-                            .reservationId(reservedRooms.getReservationId())
-                            .roomTypeId(oldPayload.getRoomTypeId())
-                            .bookingDate(oldPayload.getBookingDate())
-                            .checkinCount(oldPayload.getCheckinCount())
-                            .bookedQuantity(oldPayload.getBookedQuantity())
-                            .build();
-
-                    CommandMessage<?> modifiedMessage =
-                            original.andMetaData(Map.of("payload", newPayload));
-
-                    uow.transformMessage(m -> modifiedMessage);
+                    if(!roomInventoryForDate.getRoomTypeName().equalsIgnoreCase(command.getRoomTypeName())||
+                            !roomInventoryForDate.getBookingDate().isEqual(command.getBookingDate())||
+                            !roomInventoryForDate.getRoomTypeId().equals(command.getRoomTypeId())) {
+                        publishError(command,eventBus,"Room type or date mismatch!");
+                        return null;
+                    }
                 }
             }
         }
-
-
-
         return chain.proceed();
+    }
 
+
+    private static void publishError(CreateRoomReserveCommand command,
+                                     EventBus eventBus, String message) {
+        RoomReservationRejectedEvent roomReservationRejectedEvent = new RoomReservationRejectedEvent(
+                command.getReservationId(),
+                command.getRoomTypeId(),
+                command.getReservationId(),
+                command.getBookedQuantity(),
+                command.getBookingDate(),
+                message
+        );
+        eventBus.publish(GenericEventMessage.asEventMessage(roomReservationRejectedEvent));
     }
 }
 

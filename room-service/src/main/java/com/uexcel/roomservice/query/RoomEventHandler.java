@@ -1,17 +1,20 @@
 package com.uexcel.roomservice.query;
 
-import com.uexcel.common.event.ReservationCreatedEvent;
-import com.uexcel.common.event.ReservationUpdatedEvent;
-import com.uexcel.roomservice.command.entity.Reservation;
+import com.uexcel.common.event.PublishRoomReservedEvent;
+import com.uexcel.roomservice.command.entity.RoomInventoryForDate;
 import com.uexcel.roomservice.command.entity.Room;
-import com.uexcel.roomservice.command.repository.ReservationRepository;
+import com.uexcel.roomservice.command.inventory.RoomInventoryForDateReservedEvent;
+import com.uexcel.roomservice.command.repository.RoomInventoryForDateRepository;
 import com.uexcel.roomservice.command.repository.RoomRepository;
+import com.uexcel.roomservice.command.inventory.RoomInventoryForDateCreatedEvent;
 import com.uexcel.roomservice.command.room.RoomCreatedEvent;
 import com.uexcel.roomservice.command.entity.RoomType;
 import com.uexcel.roomservice.command.repository.RoomTypeRepository;
 import com.uexcel.roomservice.command.roomtype.RoomTypeCreatedEvent;
 import org.axonframework.config.ProcessingGroup;
+import org.axonframework.eventhandling.EventBus;
 import org.axonframework.eventhandling.EventHandler;
+import org.axonframework.eventhandling.GenericEventMessage;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
@@ -20,14 +23,14 @@ import org.springframework.stereotype.Component;
 public class RoomEventHandler {
     private final RoomTypeRepository roomTypeRepository;
     private final RoomRepository roomRepository;
-    private final ReservationRepository reservationRepository;
+    private final RoomInventoryForDateRepository roomInventoryForDateRepository;
 
     public RoomEventHandler(RoomTypeRepository roomTypeRepository,
                             RoomRepository repository, RoomRepository roomRepository,
-                            ReservationRepository reservationRepository) {
+                            RoomInventoryForDateRepository roomInventoryForDateRepository) {
         this.roomTypeRepository = roomTypeRepository;
         this.roomRepository = roomRepository;
-        this.reservationRepository = reservationRepository;
+        this.roomInventoryForDateRepository = roomInventoryForDateRepository;
     }
 
     @EventHandler
@@ -46,20 +49,25 @@ public class RoomEventHandler {
 
 
     @EventHandler
-    public void onChange(ReservationCreatedEvent event) {
-        Reservation reservation = new Reservation();
-        BeanUtils.copyProperties(event, reservation);
-        reservationRepository.save(reservation);
+    public void onChange(RoomInventoryForDateCreatedEvent event) {
+        RoomInventoryForDate roomInventoryForDate = new RoomInventoryForDate();
+        BeanUtils.copyProperties(event, roomInventoryForDate);
+        roomInventoryForDateRepository.save(roomInventoryForDate);
     }
 
     @EventHandler
-    public void onChange(ReservationUpdatedEvent event) {
-        Reservation reservedRooms = reservationRepository.
-                findByRoomTypeIdAndBookingDate(
-                        event.getRoomTypeId(),  event.getBookingDate()
-                );
-        reservedRooms.setAvailableRooms(event.getAvailableRooms());
-        reservationRepository.save(reservedRooms);
+    public void onChange(RoomInventoryForDateReservedEvent event, EventBus eventBus) {
+        RoomInventoryForDate reservedRooms =
+                roomInventoryForDateRepository.findByRoomInventoryForDateId(event.getRoomInventoryForDateId());
+        reservedRooms.setAvailableRooms(
+                reservedRooms.getAvailableRooms()
+                        - event.getBookedQuantity()
+        );
+                roomInventoryForDateRepository.save(reservedRooms);
+
+        PublishRoomReservedEvent publishRoomReservedEvent = new PublishRoomReservedEvent();
+        BeanUtils.copyProperties(event, publishRoomReservedEvent);
+        eventBus.publish(GenericEventMessage.asEventMessage(publishRoomReservedEvent));
     }
 }
 

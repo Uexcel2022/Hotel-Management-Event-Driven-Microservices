@@ -1,6 +1,8 @@
 package com.uexcel.roomservice.command.controller;
 
-import com.uexcel.roomservice.command.reservation.CreateReservationCommand;
+import com.uexcel.roomservice.command.entity.RoomType;
+import com.uexcel.roomservice.command.repository.RoomTypeRepository;
+import com.uexcel.roomservice.command.inventory.CreateRoomInventoryForDateCommand;
 import com.uexcel.roomservice.command.room.CreateRoomCommand;
 import com.uexcel.roomservice.command.roomtype.CreateRoomTypeCommand;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -18,18 +20,21 @@ import java.util.UUID;
 @RequestMapping(value = "/rooms",produces = MediaType.APPLICATION_JSON_VALUE)
 public class CommandRoomController {
     private final CommandGateway  commandGateway;
+    private final RoomTypeRepository roomTypeRepository;
 
-    public CommandRoomController(CommandGateway commandGateway) {
+    public CommandRoomController(CommandGateway commandGateway,
+                                 RoomTypeRepository roomTypeRepository) {
         this.commandGateway = commandGateway;
+        this.roomTypeRepository = roomTypeRepository;
     }
 
-    @PostMapping("/type")
-    public ResponseEntity<String> createRoomType(@RequestBody RoomTypeModel roomTypeModel) {
+    @PostMapping("/types")
+    public ResponseEntity<String> createRoomType(@RequestBody CreateRoomTypeModel createRoomTypeModel) {
         CreateRoomTypeCommand command = CreateRoomTypeCommand.builder()
                 .roomTypeId(UUID.randomUUID().toString())
-                .roomTypeName(roomTypeModel.getRoomTypeName())
-                .quantity(roomTypeModel.getQuantity())
-                .price(roomTypeModel.getPrice())
+                .roomTypeName(createRoomTypeModel.getRoomTypeName())
+                .quantity(createRoomTypeModel.getQuantity())
+                .price(createRoomTypeModel.getPrice())
                 .build();
         try {
             commandGateway.sendAndWait(command);
@@ -40,10 +45,10 @@ public class CommandRoomController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createRoom(@RequestBody RoomModel roomModel) {
+    public ResponseEntity<String> createRoom(@RequestBody CreateRoomModel createRoomModel) {
         CreateRoomCommand command = CreateRoomCommand.builder()
-                .number(roomModel.getRoomNumber())
-                .roomTypeId(roomModel.getRoomTypeId())
+                .number(createRoomModel.getRoomNumber())
+                .roomTypeId(createRoomModel.getRoomTypeId())
                 .build();
         try {
             commandGateway.sendAndWait(command);
@@ -54,15 +59,22 @@ public class CommandRoomController {
 
     }
 
-    @PostMapping("/reservation")
+    @PostMapping("/types/reservation")
     public ResponseEntity<String> createReservation(@RequestBody CreateReservationModel createReservationModel) {
+        RoomType roomType = roomTypeRepository.findByRoomTypeId(createReservationModel.getRoomTypeId());
+        if(roomType == null) {
+            throw new HttpServerErrorException(HttpStatus.NOT_FOUND,"Room Type Not Found");
+        }
+
         int numberOfDays = 365 - createReservationModel.getBookingDate().getDayOfYear();
         for(int i = 0; i < numberOfDays ; i++) {
-            CreateReservationCommand command = CreateReservationCommand.builder()
-                    .reservationId(UUID.randomUUID().toString())
+            CreateRoomInventoryForDateCommand command = CreateRoomInventoryForDateCommand.builder()
+                    .roomInventoryForDateId(UUID.randomUUID().toString())
                     .bookingDate(createReservationModel.getBookingDate().plusDays(i))
-                    .availableRooms(createReservationModel.getAvailableRooms())
-                    .roomTypeId(createReservationModel.getRoomTypeId())
+                    .availableRooms(roomType.getQuantity())
+                    .roomTypeId(roomType.getRoomTypeId())
+                    .roomTypeName(roomType.getRoomTypeName())
+                    .price(roomType.getPrice())
                     .build();
             try {
                 commandGateway.sendAndWait(command);
@@ -70,7 +82,7 @@ public class CommandRoomController {
                 throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
             }
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body("Room Created Successfully");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Room Reservations created Successfully");
     }
 
 }

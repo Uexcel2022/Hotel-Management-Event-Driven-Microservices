@@ -1,22 +1,20 @@
-package com.uexcel.bookingservice.command;
-
+package com.uexcel.common.event;
 
 import com.uexcel.common.BookingStatus;
-
 import lombok.Data;
 
-
 import java.time.LocalDate;
-
 @Data
-public class BookingCanceledEvent {
-    private String bookingId;
-    private LocalDate bookingDate;
+public class PublishRoomReservedEvent {
+    private String reservationId;
+    private String roomInventoryForDateId;
     private String customerName;
     private String mobileNumber;
+    private LocalDate bookingDate;
     private int numberOfRoom;
     private int numberOfDays;
     private String roomTypeId;
+    private double price;
+    private String roomTypeName;
     private BookingStatus bookingStatus;
-    private String  reason;
 }

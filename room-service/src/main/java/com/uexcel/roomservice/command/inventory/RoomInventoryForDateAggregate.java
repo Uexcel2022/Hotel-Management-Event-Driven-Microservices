@@ -1,13 +1,7 @@
-package com.uexcel.roomservice.command.reservation;
+package com.uexcel.roomservice.command.inventory;
 
-import com.google.common.eventbus.EventBus;
-import com.uexcel.common.error.CustomBadRequestException;
-import com.uexcel.common.event.ReservationCreatedEvent;
-import com.uexcel.common.event.ReservationUpdatedEvent;
-import com.uexcel.roomservice.command.entity.Reservation;
-import com.uexcel.roomservice.command.entity.RoomType;
-import com.uexcel.roomservice.command.repository.ReservationRepository;
-import com.uexcel.roomservice.command.repository.RoomTypeRepository;
+import com.uexcel.common.BookingStatus;
+import com.uexcel.common.command.CreateRoomReserveCommand;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -17,38 +11,48 @@ import org.springframework.beans.BeanUtils;
 
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Aggregate
-public class ReservationAggregate {
+public class RoomInventoryForDateAggregate {
     @AggregateIdentifier
-    private String reservationId;
+    private String roomInventoryForDateId;
     private String roomTypeId;
     private int availableRooms;
     private LocalDate bookingDate;
+    private String roomTypeName;
+    private double price;
 
-    public ReservationAggregate() {
+
+    public RoomInventoryForDateAggregate() {
     }
 
     @CommandHandler
-    public ReservationAggregate(CreateReservationCommand command) {
-        ReservationCreatedEvent reservationCreatedEvent = new ReservationCreatedEvent();
-        BeanUtils.copyProperties(command, reservationCreatedEvent);
-        AggregateLifecycle.apply(reservationCreatedEvent);
+    public RoomInventoryForDateAggregate(CreateRoomInventoryForDateCommand command) {
+        RoomInventoryForDateCreatedEvent roomInventoryForDateCreatedEvent = new RoomInventoryForDateCreatedEvent();
+        BeanUtils.copyProperties(command, roomInventoryForDateCreatedEvent);
+        AggregateLifecycle.apply(roomInventoryForDateCreatedEvent);
+    }
+
+    @CommandHandler
+    public void on(CreateRoomReserveCommand command) {
+        RoomInventoryForDateReservedEvent roomInventoryForDateReservedEvent = new RoomInventoryForDateReservedEvent();
+        BeanUtils.copyProperties(command, roomInventoryForDateReservedEvent);
+        roomInventoryForDateReservedEvent.setBookingStatus(BookingStatus.APPROVED);
+        AggregateLifecycle.apply(roomInventoryForDateReservedEvent);
     }
 
     @EventSourcingHandler
-    public void on(ReservationCreatedEvent event) {
-        this.reservationId = event.getReservationId();
+    public void on(RoomInventoryForDateCreatedEvent event) {
+        this.roomInventoryForDateId = event.getRoomInventoryForDateId();
         this.roomTypeId = event.getRoomTypeId();
         this.bookingDate = event.getBookingDate();
-        this.availableRooms = event.getBookedQuantity();
+        this.availableRooms = event.getAvailableRooms();
+        this.roomTypeName = event.getRoomTypeName();
     }
 
     @EventSourcingHandler
-    public void on(ReservationUpdatedEvent event) {
-        this.availableRooms -= this.availableRooms;
+    public void on(RoomInventoryForDateReservedEvent event) {
+        this.availableRooms -= event.getBookedQuantity();
 
     }
 

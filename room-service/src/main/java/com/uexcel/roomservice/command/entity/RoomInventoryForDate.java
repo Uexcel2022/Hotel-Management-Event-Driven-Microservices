@@ -8,10 +8,14 @@ import java.time.LocalDate;
 
 @Entity
 @Data
-public class Reservation {
+public class RoomInventoryForDate {
     @Id
-    private String reservationId;
+    private String roomInventoryForDateId;
     private String roomTypeId;
     private int availableRooms;
     private LocalDate bookingDate;
+    private String roomTypeName;
+    private double price;
+
 }
+

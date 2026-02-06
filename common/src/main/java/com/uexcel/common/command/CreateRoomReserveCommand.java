@@ -4,15 +4,19 @@ import lombok.Builder;
 import lombok.Data;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
+
 import java.time.LocalDate;
 @Data
 @Builder
-public class CreateApproveBookingCommand {
+public class CreateRoomReserveCommand {
     @TargetAggregateIdentifier
-    private String reservationId;
+    private final String roomInventoryForDateId;
     private final String roomTypeId;
-    private final String bookingId;
+    private final String reservationId;
     private final int bookedQuantity;
     private final LocalDate bookingDate;
-    private final int checkinCount;
+    private final String roomTypeName;
+    private final double price;
+    private final String customerName;
+    private String mobileNumber;
 }

@@ -20,7 +20,7 @@ axon:
     servers: localhost:8124
   eventhandling:
     processors:
-      booking-group:
+      room-group:
         mode: subscribing
 
 
