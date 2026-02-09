@@ -15,6 +15,7 @@ public class Reservation {
     @Id
     private String reservationId;
     private String roomTypeId;
+    private String roomTypeName;
     private String customerName;
     private String mobileNumber;
     private LocalDate bookingDate;

@@ -22,4 +22,5 @@ public class ReservationQueryHandler {
         BeanUtils.copyProperties(reservation, reservationSummary);
         return reservationSummary;
     }
+
 }

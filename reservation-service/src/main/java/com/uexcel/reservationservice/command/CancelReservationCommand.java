@@ -17,6 +17,7 @@ public class CancelReservationCommand {
     private final String roomInventoryForDateId;
     private final LocalDate bookingDate;
     private final String customerName;
+    private final String roomTypeName;
     private final String mobileNumber;
     private final int bookedQuantity;
     private final String roomTypeId;

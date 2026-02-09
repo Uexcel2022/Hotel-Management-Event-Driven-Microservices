@@ -13,6 +13,7 @@ public class Checkin {
     private String checkinId;
     private String roomNumber;
     private String roomTypeId;
+    private String roomTypeName;
     private LocalDate checkinDate;
     private LocalDate checkinTime;
     private String customerName;

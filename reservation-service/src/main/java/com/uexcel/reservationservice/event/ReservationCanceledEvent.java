@@ -13,6 +13,7 @@ import java.time.LocalDate;
 public class ReservationCanceledEvent {
     private String reservationId;
     private LocalDate bookingDate;
+    private String roomTypeName;
     private String customerName;
     private String mobileNumber;
     private int bookedQuantity;

@@ -67,6 +67,7 @@ public class ReservationSaga {
                         .mobileNumber(event.getMobileNumber())
                         .customerName(event.getCustomerName())
                         .paymentStatus(event.getPaymentStatus())
+                        .roomTypeName(event.getRoomTypeName())
                         .build();
                 commandGateway.send(cancelReservationCommand);
             } else {

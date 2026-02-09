@@ -14,6 +14,7 @@ public class ReservationSummary {
     private String mobileNumber;
     private LocalDate bookingDate;
     private int bookedQuantity;
+    private String roomType;
     private double price;
     private double total;
     private PaymentStatus paymentStatus;

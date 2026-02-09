@@ -1,6 +1,7 @@
 package com.uexcel.reservationservice.command;
 import com.uexcel.common.ReservationStatus;
 import com.uexcel.common.event.PaymentStatus;
+import com.uexcel.reservationservice.event.PaymentUpdatedEvent;
 import com.uexcel.reservationservice.event.ReservationCanceledEvent;
 import com.uexcel.reservationservice.event.ReservationConfirmedEvent;
 import com.uexcel.reservationservice.event.ReservationCreatedEvent;
@@ -54,6 +55,13 @@ public class ReservationAggregate {
         AggregateLifecycle.apply(reservationConfirmedEvent);
     }
 
+    @CommandHandler
+    public void on(PaymentUpdateCommand command){
+        PaymentUpdatedEvent paymentUpdatedEvent = new PaymentUpdatedEvent();
+        BeanUtils.copyProperties(command,paymentUpdatedEvent);
+        AggregateLifecycle.apply(paymentUpdatedEvent);
+    }
+
     @EventSourcingHandler
     public void on(ReservationCreatedEvent event){
         this.reservationId= event.getReservationId();
@@ -69,7 +77,6 @@ public class ReservationAggregate {
     }
     @EventSourcingHandler
     public  void on(ReservationCanceledEvent event){
-
         this.reservationStatus = event.getReservationStatus();
     }
 
@@ -83,5 +90,10 @@ public class ReservationAggregate {
         this.bookingDate = event.getBookingDate();
         this.bookedQuantity = event.getBookedQuantity();
         this.price = event.getPrice();
+    }
+
+    @EventSourcingHandler
+    public void on(PaymentUpdatedEvent event){
+        this.paymentStatus = event.getPaymentStatus();
     }
 }
