@@ -1,17 +1,23 @@
 package com.uexcel.reservationservice.saga;
 
 import com.uexcel.reservationservice.command.*;
-import com.uexcel.common.BookingStatus;
-import com.uexcel.common.command.CreateRoomReserveCommand;
-import com.uexcel.common.event.PublishRoomReservedEvent;
-import com.uexcel.common.event.RoomReservationRejectedEvent;
+import com.uexcel.common.ReservationStatus;
+import com.uexcel.common.command.ReserveRoomCommand;
+import com.uexcel.reservationservice.query.ReservationSummary;
+import com.uexcel.reservationservice.event.ReservationCanceledEvent;
+import com.uexcel.reservationservice.event.ReservationConfirmedEvent;
+import com.uexcel.reservationservice.event.ReservationCreatedEvent;
+import com.uexcel.reservationservice.query.FindReservationQuery;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.modelling.saga.EndSaga;
 import org.axonframework.modelling.saga.SagaEventHandler;
 import org.axonframework.modelling.saga.StartSaga;
+import org.axonframework.queryhandling.QueryUpdateEmitter;
 import org.axonframework.spring.stereotype.Saga;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -25,6 +31,9 @@ public class ReservationSaga {
 
     private String reservationId;
 
+    @Autowired
+    private QueryUpdateEmitter queryUpdateEmitter;
+
 
     @StartSaga
     @SagaEventHandler(associationProperty = "reservationId")
@@ -32,7 +41,7 @@ public class ReservationSaga {
         this.reservationId = event.getReservationId();
         LOGGER.info("BookingSaga started for bookingId={}", event.getReservationId());
 
-        CreateRoomReserveCommand command = CreateRoomReserveCommand.builder()
+        ReserveRoomCommand command = ReserveRoomCommand.builder()
                 .roomInventoryForDateId(event.getRoomInventoryForDateId())
                 .roomTypeId(event.getRoomTypeId())
                 .reservationId(event.getReservationId())
@@ -43,43 +52,62 @@ public class ReservationSaga {
                 .customerName(event.getCustomerName())
                 .mobileNumber(event.getMobileNumber())
                 .build();
-        commandGateway.send(command);
+
+        commandGateway.send(command, (commandMessage,
+                                      resultMessage) -> {
+            if (resultMessage.isExceptional()) {
+                LOGGER.info("Saga execution failed. ...booking cancel booking sent!");
+                CancelReservationCommand cancelReservationCommand = CancelReservationCommand.builder()
+                        .reservationId(event.getReservationId())
+                        .reservationStatus(ReservationStatus.rejected)
+                        .reason(resultMessage.exceptionResult().getMessage())
+                        .bookedQuantity(event.getBookedQuantity())
+                        .price(event.getPrice())
+                        .bookingDate(event.getBookingDate())
+                        .mobileNumber(event.getMobileNumber())
+                        .customerName(event.getCustomerName())
+                        .paymentStatus(event.getPaymentStatus())
+                        .build();
+                commandGateway.send(cancelReservationCommand);
+            } else {
+                LOGGER.info("Saga execution succeeded");
+                ConfirmReservationCommand confirmReservationCommand = new ConfirmReservationCommand();
+                BeanUtils.copyProperties(event, confirmReservationCommand);
+                commandGateway.send(confirmReservationCommand);
+            }
+        });
     }
 
-
-    @SagaEventHandler(associationProperty = "reservationId")
-    public void on(PublishRoomReservedEvent event) {
-        commandGateway.send(
-                new CreateConfirmReservationCommand(event.getReservationId(),event.getRoomTypeName())
-        );
-    }
 
     @EndSaga
     @SagaEventHandler(associationProperty = "reservationId")
-    public void on(PublishReservationConfirmedEvent event) {
-        LOGGER.info("Reservation approved for bookingId={} room type name {}"
+    public void on(ReservationConfirmedEvent event) {
+        ReservationSummary reservationSummary = new ReservationSummary();
+        BeanUtils.copyProperties(event, reservationSummary);
+        LOGGER.info("Reservation approved for reservationId={} room type name {}"
                 ,event.getReservationId(),event.getRoomTypeName());
+        queryUpdateEmitter.emit(
+                FindReservationQuery.class,
+                q ->
+                        q.getReservationId().equals(event.getReservationId()),
+                reservationSummary
+        );
     }
 
-
-    @SagaEventHandler(associationProperty = "reservationId")
-    public void on(RoomReservationRejectedEvent event) {
-        CancelReservationCommand cancelReservationCommand =
-                CancelReservationCommand.builder()
-                        .reservationId(event.getReservationId())
-                        .bookingStatus(BookingStatus.REJECTED)
-                        .reason(event.getReason())
-                        .build();
-
-        commandGateway.send(cancelReservationCommand);
-    }
 
     @EndSaga
     @SagaEventHandler(associationProperty = "reservationId")
     public void on(ReservationCanceledEvent event) {
-
         LOGGER.info("Booking canceled successfully for bookingId={} reason={}",
                 event.getReservationId(), event.getReason());
+        ReservationSummary reservationSummary = new ReservationSummary();
+        BeanUtils.copyProperties(event, reservationSummary);
+        queryUpdateEmitter.emit(
+                FindReservationQuery.class,
+                q ->
+                        q.getReservationId().equals(event.getReservationId()),
+                reservationSummary
+        );
     }
 }
 

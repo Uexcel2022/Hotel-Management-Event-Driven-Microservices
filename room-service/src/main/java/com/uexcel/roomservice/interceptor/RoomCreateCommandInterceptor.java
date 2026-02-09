@@ -1,4 +1,4 @@
-package com.uexcel.roomservice.command.interceptor;
+package com.uexcel.roomservice.interceptor;
 
 import com.uexcel.roomservice.command.repository.RoomRepository;
 import com.uexcel.roomservice.command.repository.RoomTypeRepository;

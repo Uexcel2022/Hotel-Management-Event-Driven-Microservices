@@ -7,10 +7,10 @@ import java.time.LocalDate;
 
 @Data
 public class RoomReservationRejectedEvent {
-    private final String roomInventoryForDateId;
-    private final String roomTypeId;
-    private final String reservationId;
-    private final int bookedQuantity;
-    private final LocalDate bookingDate;
-    private final String reason;
+    private String roomInventoryForDateId;
+    private String roomTypeId;
+    private String reservationId;
+    private int bookedQuantity;
+    private LocalDate bookingDate;
+    private String reason;
 }

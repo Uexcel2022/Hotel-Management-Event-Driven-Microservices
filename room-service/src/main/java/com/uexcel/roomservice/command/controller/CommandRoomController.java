@@ -66,11 +66,10 @@ public class CommandRoomController {
             throw new HttpServerErrorException(HttpStatus.NOT_FOUND,"Room Type Not Found");
         }
 
-        int numberOfDays = 365 - createReservationModel.getBookingDate().getDayOfYear();
-        for(int i = 0; i < numberOfDays ; i++) {
+        for(int i = 0; i < createReservationModel.getNumberOfDaysAhead(); i++) {
             CreateRoomInventoryForDateCommand command = CreateRoomInventoryForDateCommand.builder()
                     .roomInventoryForDateId(UUID.randomUUID().toString())
-                    .bookingDate(createReservationModel.getBookingDate().plusDays(i))
+                    .bookingDate(createReservationModel.getStartDate().plusDays(i))
                     .availableRooms(roomType.getQuantity())
                     .roomTypeId(roomType.getRoomTypeId())
                     .roomTypeName(roomType.getRoomTypeName())
@@ -82,7 +81,7 @@ public class CommandRoomController {
                 throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
             }
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body("Room Reservations created Successfully");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Room typee inventory created Successfully");
     }
 
 }

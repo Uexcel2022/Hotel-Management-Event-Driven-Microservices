@@ -1,31 +1,24 @@
-package com.uexcel.reservationservice.command.entity;
+package com.uexcel.reservationservice.query;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.uexcel.common.ReservationStatus;
 import com.uexcel.common.event.PaymentStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
 import lombok.Data;
 
 import java.time.LocalDate;
 
-@Entity
 @Data
-public class Reservation {
-    @Id
+public class ReservationSummary {
     private String reservationId;
-    private String roomTypeId;
     private String customerName;
     private String mobileNumber;
     private LocalDate bookingDate;
     private int bookedQuantity;
     private double price;
     private double total;
-    @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
-    @Enumerated(EnumType.STRING)
     private ReservationStatus reservationStatus;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String  reason;
 
 }
-
-

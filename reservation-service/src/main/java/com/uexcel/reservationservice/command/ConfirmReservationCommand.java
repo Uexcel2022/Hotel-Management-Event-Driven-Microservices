@@ -1,31 +1,26 @@
-package com.uexcel.reservationservice.command.entity;
+package com.uexcel.reservationservice.command;
+
 import com.uexcel.common.ReservationStatus;
 import com.uexcel.common.event.PaymentStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
 import lombok.Data;
+import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 import java.time.LocalDate;
 
-@Entity
 @Data
-public class Reservation {
-    @Id
+public class ConfirmReservationCommand {
+    @TargetAggregateIdentifier
     private String reservationId;
-    private String roomTypeId;
+    private String roomTypeName;
+    private String roomInventoryForDateId;
+    private LocalDate bookingDate;
     private String customerName;
     private String mobileNumber;
-    private LocalDate bookingDate;
     private int bookedQuantity;
+    private String roomTypeId;
+    private String reason;
     private double price;
     private double total;
-    @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
-    @Enumerated(EnumType.STRING)
     private ReservationStatus reservationStatus;
-
 }
-
-

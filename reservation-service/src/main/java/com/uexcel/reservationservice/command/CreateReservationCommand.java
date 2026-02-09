@@ -1,8 +1,7 @@
 package com.uexcel.reservationservice.command;
 
-import com.uexcel.common.BookingStatus;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import com.uexcel.common.ReservationStatus;
+import com.uexcel.common.event.PaymentStatus;
 import lombok.Builder;
 import lombok.Data;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
@@ -25,7 +24,8 @@ public class CreateReservationCommand {
     private final String roomTypeId;
     private final String roomTypeName;
     private final double price;
-    @Enumerated(EnumType.STRING)
-    private final BookingStatus bookingStatus;
+    private final double total;
+    private PaymentStatus paymentStatus;
+    private final ReservationStatus reservationStatus;
 
 }

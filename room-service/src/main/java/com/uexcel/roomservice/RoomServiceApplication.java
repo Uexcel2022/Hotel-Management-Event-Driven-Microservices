@@ -1,6 +1,6 @@
 package com.uexcel.roomservice;
 
-import com.uexcel.roomservice.command.interceptor.RoomCreateCommandInterceptor;
+import com.uexcel.roomservice.interceptor.RoomCreateCommandInterceptor;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.config.EventProcessingConfigurer;
 import org.axonframework.eventhandling.PropagatingErrorHandler;

@@ -1,8 +1,9 @@
-package com.uexcel.reservationservice.command;
+package com.uexcel.reservationservice.event;
 
 
-import com.uexcel.common.BookingStatus;
+import com.uexcel.common.ReservationStatus;
 
+import com.uexcel.common.event.PaymentStatus;
 import lombok.Data;
 
 
@@ -16,6 +17,10 @@ public class ReservationCanceledEvent {
     private String mobileNumber;
     private int bookedQuantity;
     private String roomTypeId;
-    private BookingStatus bookingStatus;
+    private double price;
+    private double total;
+    private ReservationStatus reservationStatus;
+    private PaymentStatus paymentStatus;
     private String  reason;
+
 }

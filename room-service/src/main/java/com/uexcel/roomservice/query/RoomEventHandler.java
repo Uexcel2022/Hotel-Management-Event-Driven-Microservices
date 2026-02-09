@@ -3,7 +3,7 @@ package com.uexcel.roomservice.query;
 import com.uexcel.common.event.PublishRoomReservedEvent;
 import com.uexcel.roomservice.command.entity.RoomInventoryForDate;
 import com.uexcel.roomservice.command.entity.Room;
-import com.uexcel.roomservice.command.inventory.RoomInventoryForDateReservedEvent;
+import com.uexcel.roomservice.command.inventory.RoomReservedEvent;
 import com.uexcel.roomservice.command.repository.RoomInventoryForDateRepository;
 import com.uexcel.roomservice.command.repository.RoomRepository;
 import com.uexcel.roomservice.command.inventory.RoomInventoryForDateCreatedEvent;
@@ -56,14 +56,14 @@ public class RoomEventHandler {
     }
 
     @EventHandler
-    public void onChange(RoomInventoryForDateReservedEvent event, EventBus eventBus) {
+    public void onChange(RoomReservedEvent event, EventBus eventBus) {
         RoomInventoryForDate reservedRooms =
                 roomInventoryForDateRepository.findByRoomInventoryForDateId(event.getRoomInventoryForDateId());
         reservedRooms.setAvailableRooms(
                 reservedRooms.getAvailableRooms()
                         - event.getBookedQuantity()
         );
-                roomInventoryForDateRepository.save(reservedRooms);
+        roomInventoryForDateRepository.save(reservedRooms);
 
         PublishRoomReservedEvent publishRoomReservedEvent = new PublishRoomReservedEvent();
         BeanUtils.copyProperties(event, publishRoomReservedEvent);

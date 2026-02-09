@@ -1,14 +1,11 @@
-package com.uexcel.reservationservice.command;
+package com.uexcel.reservationservice.event;
 
-import com.uexcel.common.BookingStatus;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import lombok.Builder;
+import com.uexcel.common.ReservationStatus;
+import com.uexcel.common.event.PaymentStatus;
 import lombok.Data;
 
 import java.time.LocalDate;
 @Data
-@Builder
 public class ReservationConfirmedEvent {
     private String reservationId;
     private String roomTypeName;
@@ -16,6 +13,8 @@ public class ReservationConfirmedEvent {
     private String mobileNumber;
     private LocalDate bookingDate;
     private int bookedQuantity;
-    @Enumerated(EnumType.STRING)
-    private BookingStatus bookingStatus;
+    private double price;
+    private double total;
+    private PaymentStatus paymentStatus;
+    private ReservationStatus reservationStatus;
 }

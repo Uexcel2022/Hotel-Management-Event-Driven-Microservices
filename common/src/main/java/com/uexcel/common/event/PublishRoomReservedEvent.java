@@ -1,6 +1,6 @@
 package com.uexcel.common.event;
 
-import com.uexcel.common.BookingStatus;
+import com.uexcel.common.ReservationStatus;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -16,5 +16,5 @@ public class PublishRoomReservedEvent {
     private String roomTypeId;
     private double price;
     private String roomTypeName;
-    private BookingStatus bookingStatus;
+    private ReservationStatus reservationStatus;
 }

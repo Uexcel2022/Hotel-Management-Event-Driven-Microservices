@@ -1,7 +1,7 @@
 package com.uexcel.roomservice.command.inventory;
 
-import com.uexcel.common.BookingStatus;
-import com.uexcel.common.command.CreateRoomReserveCommand;
+import com.uexcel.common.ReservationStatus;
+import com.uexcel.common.command.ReserveRoomCommand;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -34,11 +34,11 @@ public class RoomInventoryForDateAggregate {
     }
 
     @CommandHandler
-    public void on(CreateRoomReserveCommand command) {
-        RoomInventoryForDateReservedEvent roomInventoryForDateReservedEvent = new RoomInventoryForDateReservedEvent();
-        BeanUtils.copyProperties(command, roomInventoryForDateReservedEvent);
-        roomInventoryForDateReservedEvent.setBookingStatus(BookingStatus.APPROVED);
-        AggregateLifecycle.apply(roomInventoryForDateReservedEvent);
+    public void on(ReserveRoomCommand command) {
+        RoomReservedEvent roomReservedEvent = new RoomReservedEvent();
+        BeanUtils.copyProperties(command, roomReservedEvent);
+        roomReservedEvent.setReservationStatus(ReservationStatus.approved);
+        AggregateLifecycle.apply(roomReservedEvent);
     }
 
     @EventSourcingHandler
@@ -51,7 +51,7 @@ public class RoomInventoryForDateAggregate {
     }
 
     @EventSourcingHandler
-    public void on(RoomInventoryForDateReservedEvent event) {
+    public void on(RoomReservedEvent event) {
         this.availableRooms -= event.getBookedQuantity();
 
     }

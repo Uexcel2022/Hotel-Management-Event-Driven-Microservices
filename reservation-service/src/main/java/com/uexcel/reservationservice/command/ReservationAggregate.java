@@ -1,5 +1,9 @@
 package com.uexcel.reservationservice.command;
-import com.uexcel.common.BookingStatus;
+import com.uexcel.common.ReservationStatus;
+import com.uexcel.common.event.PaymentStatus;
+import com.uexcel.reservationservice.event.ReservationCanceledEvent;
+import com.uexcel.reservationservice.event.ReservationConfirmedEvent;
+import com.uexcel.reservationservice.event.ReservationCreatedEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -20,7 +24,10 @@ public class ReservationAggregate {
     private double price;
     private String roomTypeId;
     private String roomTypeName;
-    private BookingStatus bookingStatus;
+    private double total;
+    private PaymentStatus paymentStatus;
+
+    private ReservationStatus reservationStatus;
 
 
     public ReservationAggregate(){}
@@ -40,12 +47,10 @@ public class ReservationAggregate {
     }
 
      @CommandHandler
-    public void on(CreateConfirmReservationCommand command){
-        ReservationConfirmedEvent reservationConfirmedEvent = ReservationConfirmedEvent.builder()
-                .reservationId(command.getReservationId())
-                .roomTypeName(command.getRoomTypeName())
-                .bookingStatus(BookingStatus.APPROVED)
-                .build();
+    public void on(ConfirmReservationCommand command){
+        ReservationConfirmedEvent reservationConfirmedEvent = new ReservationConfirmedEvent();
+                BeanUtils.copyProperties(command,reservationConfirmedEvent);
+                reservationConfirmedEvent.setReservationStatus(ReservationStatus.approved);
         AggregateLifecycle.apply(reservationConfirmedEvent);
     }
 
@@ -59,20 +64,24 @@ public class ReservationAggregate {
         this.mobileNumber = event.getMobileNumber();
         this.roomTypeName = event.getRoomTypeName();
         this.price = event.getPrice();
+        this.total = event.getTotal();
+        this.reservationStatus = ReservationStatus.approved;
     }
     @EventSourcingHandler
     public  void on(ReservationCanceledEvent event){
-        this.bookingStatus = event.getBookingStatus();
+
+        this.reservationStatus = event.getReservationStatus();
     }
 
     @EventSourcingHandler
     public void on(ReservationConfirmedEvent event){
-        this.bookingStatus = event.getBookingStatus();
-        event.setBookingDate(this.bookingDate);
-        event.setBookedQuantity(this.bookedQuantity);
-        event.setCustomerName(this.customerName);
-        event.setMobileNumber(this.mobileNumber);
-        event.setRoomTypeName(this.roomTypeName);
-        event.setBookingStatus(this.bookingStatus);
+        this.reservationStatus = event.getReservationStatus();
+        this.reservationId = event.getReservationId();
+        this.roomTypeName = event.getRoomTypeName();
+        this.customerName = event.getCustomerName();
+        this.mobileNumber = event.getMobileNumber();
+        this.bookingDate = event.getBookingDate();
+        this.bookedQuantity = event.getBookedQuantity();
+        this.price = event.getPrice();
     }
 }

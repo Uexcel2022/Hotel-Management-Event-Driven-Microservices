@@ -1,16 +1,16 @@
 package com.uexcel.reservationservice.query;
 
-import com.uexcel.reservationservice.command.ReservationConfirmedEvent;
-import com.uexcel.reservationservice.command.ReservationCreatedEvent;
-import com.uexcel.reservationservice.command.ReservationCanceledEvent;
-import com.uexcel.reservationservice.command.PublishReservationConfirmedEvent;
+import com.uexcel.reservationservice.event.ReservationConfirmedEvent;
+import com.uexcel.reservationservice.event.ReservationCreatedEvent;
+import com.uexcel.reservationservice.event.ReservationCanceledEvent;
+
 import com.uexcel.reservationservice.command.entity.Reservation;
 import com.uexcel.reservationservice.command.repository.ReservationRepository;
-import com.uexcel.common.BookingStatus;
+import com.uexcel.common.ReservationStatus;
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventBus;
 import org.axonframework.eventhandling.EventHandler;
-import org.axonframework.eventhandling.GenericEventMessage;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
@@ -36,8 +36,9 @@ public class ReservationEventHandler {
         if(reservation ==null){
             throw new IllegalStateException("Reservation not found.");
         }
-        reservation.setBookingStatus(BookingStatus.REJECTED);
+        reservation.setReservationStatus(ReservationStatus.rejected);
         reservationRepository.save(reservation);
+
     }
 
     @EventHandler
@@ -47,11 +48,9 @@ public class ReservationEventHandler {
         if(reservation ==null){
             throw new IllegalStateException("Reservation not found.");
         }
-        reservation.setBookingStatus(BookingStatus.APPROVED);
+        reservation.setReservationStatus(ReservationStatus.approved);
         reservationRepository.save(reservation);
-        PublishReservationConfirmedEvent pRCE = new PublishReservationConfirmedEvent();
-        BeanUtils.copyProperties(event, pRCE);
-        eventBus.publish(GenericEventMessage.asEventMessage(pRCE));
+
     }
 
 }

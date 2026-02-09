@@ -6,5 +6,6 @@ import java.time.LocalDate;
 @Data
 public class CreateReservationModel {
     private String roomTypeId;
-    private LocalDate bookingDate;
+    private LocalDate startDate;
+    private int numberOfDaysAhead;
 }

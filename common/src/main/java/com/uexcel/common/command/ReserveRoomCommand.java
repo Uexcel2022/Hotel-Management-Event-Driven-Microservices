@@ -8,7 +8,7 @@ import org.axonframework.modelling.command.TargetAggregateIdentifier;
 import java.time.LocalDate;
 @Data
 @Builder
-public class CreateRoomReserveCommand {
+public class ReserveRoomCommand {
     @TargetAggregateIdentifier
     private final String roomInventoryForDateId;
     private final String roomTypeId;

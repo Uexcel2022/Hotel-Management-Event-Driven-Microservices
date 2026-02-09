@@ -1,21 +1,25 @@
 package com.uexcel.reservationservice.query;
 
-import com.uexcel.reservationservice.command.repository.CheckinRepository;
+import com.uexcel.reservationservice.command.entity.Reservation;
+import com.uexcel.reservationservice.command.repository.ReservationRepository;
 import org.axonframework.queryhandling.QueryHandler;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ReservationQueryHandler {
-    private final CheckinRepository checkinRepository;
+    private final ReservationRepository reservationRepository;
 
-    public ReservationQueryHandler(CheckinRepository checkinRepository) {
-        this.checkinRepository = checkinRepository;
+    public ReservationQueryHandler(ReservationRepository reservationRepository) {
+        this.reservationRepository = reservationRepository;
     }
 
     @QueryHandler
-    public Integer on(FindCheckinQuery query){
-        return checkinRepository.countByRoomTypeIdAndCheckinDate(
-                query.getRoomTypeId(), query.getBookingDate()
-        );
+    public ReservationSummary on(FindReservationQuery query){
+        ReservationSummary reservationSummary = new ReservationSummary();
+        Reservation reservation = reservationRepository
+                .findByReservationId(query.getReservationId());
+        BeanUtils.copyProperties(reservation, reservationSummary);
+        return reservationSummary;
     }
 }

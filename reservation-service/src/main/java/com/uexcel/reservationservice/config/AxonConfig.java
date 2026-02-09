@@ -2,6 +2,7 @@ package com.uexcel.reservationservice.config;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.security.NoTypePermission;
+
 import org.axonframework.common.transaction.TransactionManager;
 import org.axonframework.serialization.Serializer;
 import org.axonframework.serialization.xml.XStreamSerializer;
@@ -28,9 +29,10 @@ public class AxonConfig {
                 "com.uexcel.common.event.*",
                 "com.uexcel.common.command.error.*",
                 "com.uexcel.reservationservice.command.*",
+                "com.uexcel.reservationservice.event.*",
                 "com.uexcel.reservationservice.query.*",
                 "com.uexcel.reservationservice.command.controller.*",
-                "com.uexcel.reservationservice.saga.ReservationSaga",
+                "com.uexcel.reservationservice.saga*",
                 "java.util.*", "java.lang.*"
         });
         return xStream;
@@ -40,6 +42,5 @@ public class AxonConfig {
     public Serializer messageSerializer(XStream xStream) {
         return XStreamSerializer.builder().xStream(xStream).build();
     }
-
 
 }

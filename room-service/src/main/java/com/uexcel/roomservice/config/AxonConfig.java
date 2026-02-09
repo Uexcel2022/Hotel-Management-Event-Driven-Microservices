@@ -2,9 +2,14 @@ package com.uexcel.roomservice.config;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.security.NoTypePermission;
+
+import jakarta.persistence.EntityManager;
 import org.axonframework.common.transaction.TransactionManager;
+import org.axonframework.modelling.saga.repository.jpa.JpaSagaStore;
 import org.axonframework.serialization.Serializer;
+import org.axonframework.serialization.json.JacksonSerializer;
 import org.axonframework.serialization.xml.XStreamSerializer;
+
 import org.axonframework.spring.messaging.unitofwork.SpringTransactionManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,11 +17,11 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 public class AxonConfig {
-//    @Bean
-//    public TransactionManager axonTransactionManager(PlatformTransactionManager ptm) {
-//        return new SpringTransactionManager(ptm);
-//
-//    }
+    @Bean
+    public TransactionManager axonTransactionManager(PlatformTransactionManager ptm) {
+        return new SpringTransactionManager(ptm);
+
+    }
 
     @Bean
     public XStream xStream() {
@@ -32,6 +37,7 @@ public class AxonConfig {
                 "com.uexcel.roomservice.error.*",
                 "com.uexcel.roomservice.command.interceptor.*",
                 "com.uexcel.roomservice.query.*",
+                "com.uexcel.roomservice.query.controller.*",
                 "com.uexcel.roomservice.command.controller.*",
                 "com.uexcel.roomservice.command.inventory.*",
                 "java.util.*", "java.lang.*"
@@ -43,4 +49,17 @@ public class AxonConfig {
     public Serializer messageSerializer(XStream xStream) {
         return XStreamSerializer.builder().xStream(xStream).build();
     }
+
+//    @Bean
+//    public Serializer jacksonSerializer() {
+//        return JacksonSerializer.builder().build();
+//    }
+
+//    @Bean
+//    public JpaSagaStore sagaStore(EntityManager entityManager, Serializer jacksonSerializer) {
+//        return JpaSagaStore.builder()
+//                .entityManagerProvider(() -> entityManager)
+//                .serializer(jacksonSerializer) // <--- Tell Axon to use Jackson
+//                .build();
+//    }
 }

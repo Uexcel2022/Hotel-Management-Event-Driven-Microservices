@@ -4,19 +4,71 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31a3b371-2b37-4b0c-8f35-b27cd802c30b" name="Changes" comment="m4" />
+    <list default="true" id="66286c4b-34c6-4244-93c6-87b4a4bc0d56" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/uexcel/common/event/PaymentStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/query/FindReservationsQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/query/ReservationSummary.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/query/FindAllRoomTypeInventorForDate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/query/RoomQueryHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/query/controller/RoomInventoryForDateModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/query/controller/RoomQueryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bom/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/common/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/uexcel/common/BookingStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/uexcel/common/ReservationStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/uexcel/common/command/CreateRoomReserveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/uexcel/common/command/ReserveRoomCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/uexcel/common/event/PublishRoomReservedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/uexcel/common/event/PublishRoomReservedEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/uexcel/common/event/RoomReservationRejectedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/uexcel/common/event/RoomReservationRejectedEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reservation-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/reservation-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/command/CancelReservationCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/command/CancelReservationCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/command/CreateConfirmReservationCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/command/ConfirmReservationCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/command/CreateReservationCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/command/CreateReservationCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/command/PublishReservationConfirmedEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/command/ReservationAggregate.java" beforeDir="false" afterPath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/command/ReservationAggregate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/command/ReservationCanceledEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/event/ReservationCanceledEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/command/ReservationConfirmedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/event/ReservationConfirmedEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/command/ReservationCreatedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/event/ReservationCreatedEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/command/controller/ReservationCommandController.java" beforeDir="false" afterPath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/command/controller/ReservationCommandController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/command/controller/ReservationSummary.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/command/entity/Reservation.java" beforeDir="false" afterPath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/command/entity/Reservation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/config/AxonConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/config/AxonConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/query/ReservationEventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/query/ReservationEventHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/query/ReservationQueryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/query/ReservationQueryHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/saga/ReservationSaga.java" beforeDir="false" afterPath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/saga/ReservationSaga.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/RoomServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/RoomServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/command/controller/CommandRoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/command/controller/CommandRoomController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/command/controller/CreateReservationModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/command/controller/CreateReservationModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/command/interceptor/CommandHandlerInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/interceptor/CommandHandlerInterceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/command/interceptor/RoomCreateCommandInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/interceptor/RoomCreateCommandInterceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/command/inventory/RoomInventoryForDateAggregate.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/command/inventory/RoomInventoryForDateAggregate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/command/inventory/RoomInventoryForDateReservedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/command/inventory/RoomReservedEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/config/AxonConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/config/AxonConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/query/RoomEventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/query/RoomEventHandler.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -25,40 +77,44 @@
     </option>
   </component>
   <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 5
 }</component>
-  <component name="ProjectId" id="39Id42foqhUZA7snAMqzu5d3IJo" />
+  <component name="ProjectId" id="39OXwh5PzMY31iqp1oLjwl5XQR7" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "Spring Boot.ReservationServiceApplication.executor": "Run",
-    "Spring Boot.RoomServiceApplication.executor": "Run",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/excel/Event-Driven_Microservices/Hotel-Management",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ReservationServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.RoomServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
   <component name="RunManager" selected="Spring Boot.ReservationServiceApplication">
     <configuration name="ReservationServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="reservation-service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.uexcel.reservationservice.ReservationServiceApplication" />
       <method v="2">
@@ -66,6 +122,7 @@
       </method>
     </configuration>
     <configuration name="RoomServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="room-service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.uexcel.roomservice.RoomServiceApplication" />
       <method v="2">
@@ -83,40 +140,24 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="31a3b371-2b37-4b0c-8f35-b27cd802c30b" name="Changes" comment="" />
-      <created>1770387325797</created>
+      <changelist id="66286c4b-34c6-4244-93c6-87b4a4bc0d56" name="Changes" comment="" />
+      <created>1770568334616</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1770387325797</updated>
-      <workItem from="1770387328919" duration="14929000" />
+      <updated>1770568334616</updated>
+      <workItem from="1770568336509" duration="19992000" />
+      <workItem from="1770622240919" duration="4767000" />
     </task>
-    <task id="LOCAL-00001" summary="m4">
-      <option name="closed" value="true" />
-      <created>1770404047742</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1770404047743</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="m4" />
-    <option name="LAST_COMMIT_MESSAGE" value="m4" />
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="SpringBootApplicationConfigurationType">
+        <watch expression="command" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
