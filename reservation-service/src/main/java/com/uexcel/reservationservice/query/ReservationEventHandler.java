@@ -54,6 +54,7 @@ public class ReservationEventHandler {
             throw new IllegalStateException("Reservation not found.");
         }
         reservation.setReservationStatus(ReservationStatus.approved);
+        reservation.setPaymentStatus(event.getPaymentStatus());
         reservationRepository.save(reservation);
 
     }

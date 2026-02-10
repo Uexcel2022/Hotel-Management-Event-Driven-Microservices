@@ -1,5 +1,8 @@
 package com.uexcel.reservationservice.saga;
 
+import com.uexcel.common.PaymentStatus;
+import com.uexcel.common.query.FindPaymentDetailsQuery;
+import com.uexcel.common.query.PaymentDetailsModel;
 import com.uexcel.reservationservice.command.*;
 import com.uexcel.common.ReservationStatus;
 import com.uexcel.common.command.ReserveRoomCommand;
@@ -9,9 +12,11 @@ import com.uexcel.reservationservice.event.ReservationConfirmedEvent;
 import com.uexcel.reservationservice.event.ReservationCreatedEvent;
 import com.uexcel.reservationservice.query.FindReservationQuery;
 import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.modelling.saga.EndSaga;
 import org.axonframework.modelling.saga.SagaEventHandler;
 import org.axonframework.modelling.saga.StartSaga;
+import org.axonframework.queryhandling.QueryGateway;
 import org.axonframework.queryhandling.QueryUpdateEmitter;
 import org.axonframework.spring.stereotype.Saga;
 import org.slf4j.Logger;
@@ -32,6 +37,9 @@ public class ReservationSaga {
     private String reservationId;
 
     @Autowired
+    private transient QueryGateway queryGateway;
+
+    @Autowired
     private QueryUpdateEmitter queryUpdateEmitter;
 
 
@@ -39,44 +47,53 @@ public class ReservationSaga {
     @SagaEventHandler(associationProperty = "reservationId")
     public void on(ReservationCreatedEvent event) {
         this.reservationId = event.getReservationId();
+
         LOGGER.info("BookingSaga started for bookingId={}", event.getReservationId());
 
-        ReserveRoomCommand command = ReserveRoomCommand.builder()
-                .roomInventoryForDateId(event.getRoomInventoryForDateId())
-                .roomTypeId(event.getRoomTypeId())
-                .reservationId(event.getReservationId())
-                .bookedDate(event.getBookedDate())
-                .roomTypeName(event.getRoomTypeName())
-                .price(event.getPrice())
-                .total(event.getTotal())
-                .customerName(event.getCustomerName())
-                .mobileNumber(event.getMobileNumber())
-                .build();
+        PaymentDetailsModel paymentDetailsModel =
+                queryGateway.query(new FindPaymentDetailsQuery(event.getMobileNumber()),
+                        ResponseTypes.instanceOf(PaymentDetailsModel.class)).join();
 
-        commandGateway.send(command, (commandMessage,
-                                      resultMessage) -> {
-            if (resultMessage.isExceptional()) {
-                LOGGER.info("Saga execution failed. ...booking cancel booking sent!");
-                CancelReservationCommand cancelReservationCommand = CancelReservationCommand.builder()
-                        .reservationId(event.getReservationId())
-                        .reservationStatus(ReservationStatus.rejected)
-                        .reason(resultMessage.exceptionResult().getMessage())
-                        .price(event.getPrice())
-                        .bookedDate(event.getBookedDate())
-                        .mobileNumber(event.getMobileNumber())
-                        .customerName(event.getCustomerName())
-                        .paymentStatus(event.getPaymentStatus())
-                        .roomTypeName(event.getRoomTypeName())
-                        .total(event.getTotal())
-                        .build();
-                commandGateway.send(cancelReservationCommand);
-            } else {
-                LOGGER.info("Saga execution succeeded");
-                ConfirmReservationCommand confirmReservationCommand = new ConfirmReservationCommand();
-                BeanUtils.copyProperties(event, confirmReservationCommand);
-                commandGateway.send(confirmReservationCommand);
-            }
-        });
+        LOGGER.info("Fetched payment details {}", paymentDetailsModel);
+
+        if (paymentDetailsModel == null) {
+            commandGateway.send(cancelReservationCommand(event, "Payment failed."));
+        }
+        else {
+
+            LOGGER.info("Payment successful.");
+
+           LOGGER.info("Sending room reservation command!");
+
+            ReserveRoomCommand command = ReserveRoomCommand.builder()
+                    .roomInventoryForDateId(event.getRoomInventoryForDateId())
+                    .roomTypeId(event.getRoomTypeId())
+                    .reservationId(event.getReservationId())
+                    .bookedDate(event.getBookedDate())
+                    .roomTypeName(event.getRoomTypeName())
+                    .price(event.getPrice())
+                    .total(event.getTotal())
+                    .customerName(event.getCustomerName())
+                    .mobileNumber(event.getMobileNumber())
+                    .build();
+
+            commandGateway.send(command, (commandMessage,
+                                          resultMessage) -> {
+                if (resultMessage.isExceptional()) {
+                    LOGGER.info("Saga execution failed. ...reservation canceled");
+                    commandGateway.send(
+                            cancelReservationCommand(event,
+                                    resultMessage.exceptionResult().getMessage())
+                    );
+                } else {
+
+                    ConfirmReservationCommand confirmReservationCommand = new ConfirmReservationCommand();
+                    BeanUtils.copyProperties(event, confirmReservationCommand);
+                    confirmReservationCommand.setPaymentStatus(PaymentStatus.paid);
+                    commandGateway.send(confirmReservationCommand);
+                }
+            });
+        }
     }
 
 
@@ -108,6 +125,23 @@ public class ReservationSaga {
                         q.getReservationId().equals(event.getReservationId()),
                 reservationSummary
         );
+    }
+
+    private CancelReservationCommand cancelReservationCommand
+            (ReservationCreatedEvent event,String reason){
+
+        return CancelReservationCommand.builder()
+                .reservationId(event.getReservationId())
+                .reservationStatus(ReservationStatus.rejected)
+                .reason(reason)
+                .price(event.getPrice())
+                .bookedDate(event.getBookedDate())
+                .mobileNumber(event.getMobileNumber())
+                .customerName(event.getCustomerName())
+                .paymentStatus(event.getPaymentStatus())
+                .roomTypeName(event.getRoomTypeName())
+                .total(event.getTotal())
+                .build();
     }
 }
 

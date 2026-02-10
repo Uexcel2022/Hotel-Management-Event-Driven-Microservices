@@ -1,7 +1,8 @@
-package com.uexcel.reservationservice.config;
+package com.uexcel.paymentservice.config;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.security.NoTypePermission;
+
 
 import org.axonframework.common.transaction.TransactionManager;
 import org.axonframework.serialization.Serializer;
@@ -11,14 +12,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
+
 @Configuration
 public class AxonConfig {
 
-    @Bean
-    public TransactionManager axonTransactionManager(PlatformTransactionManager ptm) {
-        return new SpringTransactionManager(ptm);
-
-    }
+//    @Bean
+//    public TransactionManager axonTransactionManager(PlatformTransactionManager ptm) {
+//        return new SpringTransactionManager(ptm);
+//    }
 
     @Bean
     public XStream xStream() {
@@ -28,12 +29,7 @@ public class AxonConfig {
                 "com.uexcel.common.command.*",
                 "com.uexcel.common.event.*",
                 "com.uexcel.common.query.*",
-                "com.uexcel.common.command.error.*",
-                "com.uexcel.reservationservice.command.*",
-                "com.uexcel.reservationservice.event.*",
-                "com.uexcel.reservationservice.query.*",
-                "com.uexcel.reservationservice.command.controller.*",
-                "com.uexcel.reservationservice.saga*",
+                "com.uexcel.paymentservice.*.*",
                 "java.util.*", "java.lang.*"
         });
         return xStream;
@@ -45,3 +41,4 @@ public class AxonConfig {
     }
 
 }
+
