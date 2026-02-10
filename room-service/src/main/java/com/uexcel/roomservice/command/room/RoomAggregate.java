@@ -1,5 +1,6 @@
 package com.uexcel.roomservice.command.room;
 
+import com.uexcel.common.RoomStatus;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -10,8 +11,9 @@ import org.springframework.beans.BeanUtils;
 @Aggregate
 public class RoomAggregate {
     @AggregateIdentifier
-    private String number;
+    private String roomNumber;
     private String roomTypeId;
+    private RoomStatus roomStatus;
     public RoomAggregate(){}
 
     @CommandHandler
@@ -23,7 +25,8 @@ public class RoomAggregate {
 
     @EventSourcingHandler
     public void  on(RoomCreatedEvent event){
-        this.number = event.getNumber();
+        this.roomNumber = event.getRoomNumber();
         this.roomTypeId = event.getRoomTypeId();
+        this.roomStatus = event.getRoomStatus();
     }
 }

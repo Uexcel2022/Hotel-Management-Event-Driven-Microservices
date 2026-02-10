@@ -45,10 +45,10 @@ public class ReservationSaga {
                 .roomInventoryForDateId(event.getRoomInventoryForDateId())
                 .roomTypeId(event.getRoomTypeId())
                 .reservationId(event.getReservationId())
-                .bookedQuantity(event.getBookedQuantity())
-                .bookingDate(event.getBookingDate())
+                .bookedDate(event.getBookedDate())
                 .roomTypeName(event.getRoomTypeName())
                 .price(event.getPrice())
+                .total(event.getTotal())
                 .customerName(event.getCustomerName())
                 .mobileNumber(event.getMobileNumber())
                 .build();
@@ -61,13 +61,13 @@ public class ReservationSaga {
                         .reservationId(event.getReservationId())
                         .reservationStatus(ReservationStatus.rejected)
                         .reason(resultMessage.exceptionResult().getMessage())
-                        .bookedQuantity(event.getBookedQuantity())
                         .price(event.getPrice())
-                        .bookingDate(event.getBookingDate())
+                        .bookedDate(event.getBookedDate())
                         .mobileNumber(event.getMobileNumber())
                         .customerName(event.getCustomerName())
                         .paymentStatus(event.getPaymentStatus())
                         .roomTypeName(event.getRoomTypeName())
+                        .total(event.getTotal())
                         .build();
                 commandGateway.send(cancelReservationCommand);
             } else {
@@ -94,7 +94,6 @@ public class ReservationSaga {
                 reservationSummary
         );
     }
-
 
     @EndSaga
     @SagaEventHandler(associationProperty = "reservationId")
@@ -143,16 +142,16 @@ public class ReservationSaga {
 //    @SagaEventHandler(associationProperty = "bookingId")
 //    public void on(BookingCreatedEvent event) {
 //        FindCheckinQuery query =
-//                new FindCheckinQuery(event.getRoomTypeId(), event.getBookingDate());
+//                new FindCheckinQuery(event.getRoomTypeId(), event.getBookedDate());
 //
 //        Integer checkinCount =
 //                queryGateway.query(query, ResponseTypes.instanceOf(Integer.class)).join();
 //
 //        CreateReservationCommand createReservationCommand = CreateReservationCommand.builder()
-//                .reservationId(event.getRoomTypeId()+event.getBookingDate())
+//                .reservationId(event.getRoomTypeId()+event.getBookedDate())
 //                .roomTypeId(event.getRoomTypeId())
 //                .bookedQuantity(event.getNumberOfRoom())
-//                .bookingDate(event.getBookingDate())
+//                .bookingDate(event.getBookedDate())
 //                .checkinCount(checkinCount)
 //                .bookingId(event.getBookingId())
 //                .build();
@@ -166,7 +165,7 @@ public class ReservationSaga {
 //                        .bookingId(event.getBookingId())
 //                        .bookingStatus(BookingStatus.REJECTED)
 //                        .numberOfRoom(event.getNumberOfRoom())
-//                        .bookingDate(event.getBookingDate())
+//                        .bookingDate(event.getBookedDate())
 //                        .numberOfDays(event.getNumberOfDays())
 //                        .customerName(event.getCustomerName())
 //                        .mobileNumber(event.getMobileNumber())

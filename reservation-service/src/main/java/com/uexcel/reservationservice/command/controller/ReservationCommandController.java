@@ -1,6 +1,6 @@
 package com.uexcel.reservationservice.command.controller;
 
-import com.uexcel.common.event.PaymentStatus;
+import com.uexcel.common.PaymentStatus;
 import com.uexcel.reservationservice.command.CreateReservationCommand;
 import com.uexcel.common.ReservationStatus;
 import com.uexcel.reservationservice.command.PaymentUpdateCommand;
@@ -35,16 +35,14 @@ public class ReservationCommandController {
                 .reservationId(UUID.randomUUID().toString())
                 .roomInventoryForDateId(createReservationModel
                         .getRoomInventoryForDateId())
-                .bookingDate(createReservationModel.getBookingDate())
+                .bookedDate(createReservationModel.getBookedDate())
                 .reservationStatus(ReservationStatus.created)
                 .mobileNumber(createReservationModel.getMobileNumber())
                 .customerName(createReservationModel.getCustomerName())
-                .bookedQuantity(createReservationModel.getBookedQuantity())
                 .roomTypeId(createReservationModel.getRoomTypeId())
                 .roomTypeName(createReservationModel.getRoomTypeName())
                 .price(createReservationModel.getPrice())
-                .total(createReservationModel.getBookedQuantity()
-                        *createReservationModel.getPrice())
+                .total(createReservationModel.getPrice())
                 .paymentStatus(PaymentStatus.pending)
                 .build();
 

@@ -1,6 +1,6 @@
 package com.uexcel.reservationservice.command;
 import com.uexcel.common.ReservationStatus;
-import com.uexcel.common.event.PaymentStatus;
+import com.uexcel.common.PaymentStatus;
 import com.uexcel.reservationservice.event.PaymentUpdatedEvent;
 import com.uexcel.reservationservice.event.ReservationCanceledEvent;
 import com.uexcel.reservationservice.event.ReservationConfirmedEvent;
@@ -21,7 +21,6 @@ public class ReservationAggregate {
     private String customerName;
     private String mobileNumber;
     private LocalDate bookingDate;
-    private int bookedQuantity;
     private double price;
     private String roomTypeId;
     private String roomTypeName;
@@ -66,8 +65,7 @@ public class ReservationAggregate {
     public void on(ReservationCreatedEvent event){
         this.reservationId= event.getReservationId();
         this.roomTypeId = event.getRoomTypeId();
-        this.bookingDate = event.getBookingDate();
-        this.bookedQuantity = event.getBookedQuantity();
+        this.bookingDate = event.getBookedDate();
         this.customerName= event.getCustomerName();
         this.mobileNumber = event.getMobileNumber();
         this.roomTypeName = event.getRoomTypeName();
@@ -87,8 +85,7 @@ public class ReservationAggregate {
         this.roomTypeName = event.getRoomTypeName();
         this.customerName = event.getCustomerName();
         this.mobileNumber = event.getMobileNumber();
-        this.bookingDate = event.getBookingDate();
-        this.bookedQuantity = event.getBookedQuantity();
+        this.bookingDate = event.getBookedDate();
         this.price = event.getPrice();
     }
 

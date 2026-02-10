@@ -1,6 +1,6 @@
 package com.uexcel.reservationservice.command.entity;
 import com.uexcel.common.ReservationStatus;
-import com.uexcel.common.event.PaymentStatus;
+import com.uexcel.common.PaymentStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -18,8 +18,7 @@ public class Reservation {
     private String roomTypeName;
     private String customerName;
     private String mobileNumber;
-    private LocalDate bookingDate;
-    private int bookedQuantity;
+    private LocalDate bookedDate;
     private double price;
     private double total;
     @Enumerated(EnumType.STRING)

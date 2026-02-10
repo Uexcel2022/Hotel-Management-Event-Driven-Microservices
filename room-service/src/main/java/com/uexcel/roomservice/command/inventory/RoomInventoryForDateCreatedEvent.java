@@ -8,7 +8,7 @@ public class RoomInventoryForDateCreatedEvent {
     private  String roomInventoryForDateId;
     private String roomTypeId;
     private String roomTypeName;
-    private LocalDate bookingDate;
+    private LocalDate availabilityDate;
     private int availableRooms;
     private double price;
 }

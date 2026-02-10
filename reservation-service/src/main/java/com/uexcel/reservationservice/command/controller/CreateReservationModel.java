@@ -7,10 +7,9 @@ import java.time.LocalDate;
 @Data
 public class CreateReservationModel {
     private String roomInventoryForDateId;
-    private LocalDate bookingDate;
+    private LocalDate bookedDate;
     private String customerName;
     private String mobileNumber;
-    private int bookedQuantity;
     private String roomTypeId;
     private String roomTypeName;
     private double price;

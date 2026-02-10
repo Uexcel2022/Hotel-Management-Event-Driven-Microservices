@@ -1,6 +1,7 @@
 package com.uexcel.roomservice.command.controller;
 
-import com.uexcel.roomservice.command.entity.RoomType;
+import com.uexcel.common.RoomStatus;
+import com.uexcel.roomservice.entity.RoomType;
 import com.uexcel.roomservice.command.repository.RoomTypeRepository;
 import com.uexcel.roomservice.command.inventory.CreateRoomInventoryForDateCommand;
 import com.uexcel.roomservice.command.room.CreateRoomCommand;
@@ -47,8 +48,9 @@ public class CommandRoomController {
     @PostMapping
     public ResponseEntity<String> createRoom(@RequestBody CreateRoomModel createRoomModel) {
         CreateRoomCommand command = CreateRoomCommand.builder()
-                .number(createRoomModel.getRoomNumber())
+                .roomNumber(createRoomModel.getRoomNumber())
                 .roomTypeId(createRoomModel.getRoomTypeId())
+                .roomStatus(RoomStatus.available)
                 .build();
         try {
             commandGateway.sendAndWait(command);
@@ -69,7 +71,7 @@ public class CommandRoomController {
         for(int i = 0; i < createReservationModel.getNumberOfDaysAhead(); i++) {
             CreateRoomInventoryForDateCommand command = CreateRoomInventoryForDateCommand.builder()
                     .roomInventoryForDateId(UUID.randomUUID().toString())
-                    .bookingDate(createReservationModel.getStartDate().plusDays(i))
+                    .availabilityDate(createReservationModel.getStartDate().plusDays(i))
                     .availableRooms(roomType.getQuantity())
                     .roomTypeId(roomType.getRoomTypeId())
                     .roomTypeName(roomType.getRoomTypeName())

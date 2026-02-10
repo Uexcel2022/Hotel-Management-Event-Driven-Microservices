@@ -1,21 +1,15 @@
-package com.uexcel.roomservice.command.entity;
+package com.uexcel.roomservice.query.reservationfordate;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.Data;
 
 import java.time.LocalDate;
 
-@Entity
 @Data
-public class RoomInventoryForDate {
-    @Id
+public class RoomInventoryForDateModel {
     private String roomInventoryForDateId;
     private String roomTypeId;
     private int availableRooms;
-    private LocalDate bookingDate;
+    private LocalDate availabilityDate;
     private String roomTypeName;
     private double price;
-
 }
-

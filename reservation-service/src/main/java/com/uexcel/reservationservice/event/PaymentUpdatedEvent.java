@@ -1,5 +1,5 @@
 package com.uexcel.reservationservice.event;
-import com.uexcel.common.event.PaymentStatus;
+import com.uexcel.common.PaymentStatus;
 import lombok.Data;
 
 @Data

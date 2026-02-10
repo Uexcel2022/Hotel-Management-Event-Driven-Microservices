@@ -30,9 +30,9 @@ public class RoomCreateCommandInterceptor implements MessageDispatchInterceptor<
                 if(!roomTypeRepository.existsByRoomTypeId(cRC.getRoomTypeId())){
                     throw new  IllegalArgumentException("Invalid Room Type ID");
                 }else {
-                    if(roomRepository.existsByNumber(cRC.getNumber())){
+                    if(roomRepository.existsByRoomNumber(cRC.getRoomNumber())){
                         throw new  IllegalArgumentException("""
-                                The room '%s' already exists.""".formatted(cRC.getNumber()));
+                                The room '%s' already exists.""".formatted(cRC.getRoomNumber()));
 
                     }
                 }

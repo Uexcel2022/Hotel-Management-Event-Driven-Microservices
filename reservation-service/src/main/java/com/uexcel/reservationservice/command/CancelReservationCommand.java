@@ -2,7 +2,7 @@ package com.uexcel.reservationservice.command;
 
 
 import com.uexcel.common.ReservationStatus;
-import com.uexcel.common.event.PaymentStatus;
+import com.uexcel.common.PaymentStatus;
 import lombok.Builder;
 import lombok.Data;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
@@ -15,11 +15,10 @@ public class CancelReservationCommand {
     @TargetAggregateIdentifier
     private final String reservationId;
     private final String roomInventoryForDateId;
-    private final LocalDate bookingDate;
+    private final LocalDate bookedDate;
     private final String customerName;
     private final String roomTypeName;
     private final String mobileNumber;
-    private final int bookedQuantity;
     private final String roomTypeId;
     private final String reason;
     private final double price;

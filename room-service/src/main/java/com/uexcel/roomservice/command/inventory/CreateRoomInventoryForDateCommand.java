@@ -12,7 +12,7 @@ public class CreateRoomInventoryForDateCommand {
     private String roomInventoryForDateId;
     private String roomTypeId;
     private int availableRooms;
-    private LocalDate bookingDate;
+    private LocalDate availabilityDate;
     private String roomTypeName;
     private double price;
 }

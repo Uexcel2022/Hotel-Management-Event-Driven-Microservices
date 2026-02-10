@@ -36,11 +36,15 @@ public class AxonConfig {
                 "com.uexcel.roomservice.command.roomtype.*",
                 "com.uexcel.roomservice.error.*",
                 "com.uexcel.roomservice.command.interceptor.*",
+                "com.uexcel.roomservice.query.reservationfordate.*",
+                "com.uexcel.roomservice.query.room.*",
                 "com.uexcel.roomservice.query.*",
+                "com.uexcel.roomservice.entity.*",
                 "com.uexcel.roomservice.query.controller.*",
                 "com.uexcel.roomservice.command.controller.*",
                 "com.uexcel.roomservice.command.inventory.*",
                 "java.util.*", "java.lang.*"
+
         });
         return xStream;
     }
@@ -49,17 +53,4 @@ public class AxonConfig {
     public Serializer messageSerializer(XStream xStream) {
         return XStreamSerializer.builder().xStream(xStream).build();
     }
-
-//    @Bean
-//    public Serializer jacksonSerializer() {
-//        return JacksonSerializer.builder().build();
-//    }
-
-//    @Bean
-//    public JpaSagaStore sagaStore(EntityManager entityManager, Serializer jacksonSerializer) {
-//        return JpaSagaStore.builder()
-//                .entityManagerProvider(() -> entityManager)
-//                .serializer(jacksonSerializer) // <--- Tell Axon to use Jackson
-//                .build();
-//    }
 }

@@ -13,10 +13,10 @@ public class ReserveRoomCommand {
     private final String roomInventoryForDateId;
     private final String roomTypeId;
     private final String reservationId;
-    private final int bookedQuantity;
-    private final LocalDate bookingDate;
+    private final LocalDate bookedDate;
     private final String roomTypeName;
     private final double price;
+    private final double total;
     private final String customerName;
     private String mobileNumber;
 }

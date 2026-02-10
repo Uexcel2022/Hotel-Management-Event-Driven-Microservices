@@ -2,7 +2,7 @@ package com.uexcel.reservationservice.query;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.uexcel.common.ReservationStatus;
-import com.uexcel.common.event.PaymentStatus;
+import com.uexcel.common.PaymentStatus;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -12,9 +12,8 @@ public class ReservationSummary {
     private String reservationId;
     private String customerName;
     private String mobileNumber;
-    private LocalDate bookingDate;
-    private int bookedQuantity;
-    private String roomType;
+    private LocalDate bookedDate;
+    private String roomTypeName;
     private double price;
     private double total;
     private PaymentStatus paymentStatus;

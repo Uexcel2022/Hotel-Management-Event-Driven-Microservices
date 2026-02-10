@@ -1,15 +1,11 @@
 package com.uexcel.reservationservice.command.interceptor;
 
-import com.uexcel.common.event.PaymentStatus;
 import com.uexcel.reservationservice.command.PaymentUpdateCommand;
 import com.uexcel.reservationservice.command.entity.Reservation;
 import com.uexcel.reservationservice.command.repository.ReservationRepository;
 import org.axonframework.commandhandling.CommandExecutionException;
 import org.axonframework.commandhandling.CommandMessage;
-import org.axonframework.messaging.InterceptorChain;
 import org.axonframework.messaging.MessageDispatchInterceptor;
-import org.axonframework.messaging.MessageHandlerInterceptor;
-import org.axonframework.messaging.unitofwork.UnitOfWork;
 import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Component;
 
@@ -37,7 +33,7 @@ public class ReservationCommandInterceptor implements MessageDispatchInterceptor
                     throw new CommandExecutionException("The reservation does not exist!", null);
                 }
 
-                if(LocalDate.now().isAfter(reservation.getBookingDate())){
+                if(LocalDate.now().isAfter(reservation.getBookedDate())){
                     throw new CommandExecutionException("The reservation has expired and due for removal!.",null);
                 }
             }

@@ -9,8 +9,7 @@ public class RoomReservedEvent {
     private String roomInventoryForDateId;
     private String reservationId;
     private String roomTypeId;
-    private int bookedQuantity;
-    private LocalDate bookingDate;
+    private LocalDate bookedDate;
     private String roomTypeName;
     private double price;
     private String customerName;

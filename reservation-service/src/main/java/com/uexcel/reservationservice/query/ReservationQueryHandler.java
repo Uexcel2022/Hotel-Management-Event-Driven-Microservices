@@ -6,6 +6,9 @@ import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class ReservationQueryHandler {
     private final ReservationRepository reservationRepository;
@@ -21,6 +24,18 @@ public class ReservationQueryHandler {
                 .findByReservationId(query.getReservationId());
         BeanUtils.copyProperties(reservation, reservationSummary);
         return reservationSummary;
+    }
+
+     @QueryHandler
+    public List<ReservationSummary> on(FindReservationByMobileNumberQuery query){
+       List<ReservationSummary> reservationSummaryList = new ArrayList<>();
+        reservationRepository.findByMobileNumber(query.getMobileNumber())
+                .forEach(reservation -> {
+                    ReservationSummary reservationSummary = new ReservationSummary();
+                        BeanUtils.copyProperties(reservation, reservationSummary);
+                        reservationSummaryList.add(reservationSummary);
+                });
+        return reservationSummaryList;
     }
 
 }

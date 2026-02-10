@@ -1,7 +1,7 @@
 package com.uexcel.reservationservice.event;
 
 import com.uexcel.common.ReservationStatus;
-import com.uexcel.common.event.PaymentStatus;
+import com.uexcel.common.PaymentStatus;
 import lombok.Data;
 import java.time.LocalDate;
 
@@ -11,8 +11,7 @@ public class ReservationCreatedEvent {
     private String roomInventoryForDateId;
     private String customerName;
     private String mobileNumber;
-    private LocalDate bookingDate;
-    private int bookedQuantity;
+    private LocalDate bookedDate;
     private String roomTypeId;
     private double price;
     private double total;

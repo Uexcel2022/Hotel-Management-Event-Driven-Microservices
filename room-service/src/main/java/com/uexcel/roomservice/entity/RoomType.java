@@ -1,4 +1,4 @@
-package com.uexcel.roomservice.command.entity;
+package com.uexcel.roomservice.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

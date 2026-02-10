@@ -2,7 +2,7 @@ package com.uexcel.roomservice.interceptor;
 
 
 import com.uexcel.common.command.ReserveRoomCommand;
-import com.uexcel.roomservice.command.entity.RoomInventoryForDate;
+import com.uexcel.roomservice.entity.RoomInventoryForDate;
 import com.uexcel.roomservice.command.repository.RoomInventoryForDateRepository;
 import org.axonframework.commandhandling.CommandExecutionException;
 import org.axonframework.commandhandling.CommandMessage;
@@ -34,17 +34,16 @@ public class CommandHandlerInterceptor
             RoomInventoryForDate roomInventoryForDate = roomInventoryForDateRepository
                     .findByRoomInventoryForDateId(command.getRoomInventoryForDateId());
 
-            if (roomInventoryForDate == null || LocalDate.now().isAfter(command.getBookingDate())) {
+            if (roomInventoryForDate == null || LocalDate.now().isAfter(command.getBookedDate())) {
                 throw new CommandExecutionException("Invalid room type reservation for date ID or Past date!", null);
             }
 
-            boolean currentAvailableRooms = roomInventoryForDate.getAvailableRooms() < command.getBookedQuantity();
-            if (currentAvailableRooms) {
-                throw new CommandExecutionException("Insufficient number of available rooms!", null);
+            if (roomInventoryForDate.getAvailableRooms() < 1) {
+                throw new CommandExecutionException("The room type is currently unavailable!", null);
             }
 
             if (!roomInventoryForDate.getRoomTypeName().equalsIgnoreCase(command.getRoomTypeName()) ||
-                    !roomInventoryForDate.getBookingDate().isEqual(command.getBookingDate()) ||
+                    !roomInventoryForDate.getAvailabilityDate().isEqual(command.getBookedDate()) ||
                     !roomInventoryForDate.getRoomTypeId().equals(command.getRoomTypeId())) {
                 throw new CommandExecutionException("Room type or date mismatch!", null);
             }

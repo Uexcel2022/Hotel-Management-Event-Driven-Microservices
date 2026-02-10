@@ -1,4 +1,4 @@
-package com.uexcel.common.event;
+package com.uexcel.common;
 
 public enum PaymentStatus {
     refunded,pending,paid
