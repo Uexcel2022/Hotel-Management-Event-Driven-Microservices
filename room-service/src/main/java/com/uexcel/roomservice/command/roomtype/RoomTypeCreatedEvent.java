@@ -1,6 +1,5 @@
 package com.uexcel.roomservice.command.roomtype;
 
-import lombok.Builder;
 import lombok.Data;
 
 @Data

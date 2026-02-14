@@ -1,5 +1,5 @@
 package com.uexcel.common;
 
 public enum RoomStatus {
-    available,occupied
+    available,occupied,cleaning,maintenance
 }

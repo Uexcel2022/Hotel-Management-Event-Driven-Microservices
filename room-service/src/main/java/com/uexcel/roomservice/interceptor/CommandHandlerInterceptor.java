@@ -1,7 +1,12 @@
 package com.uexcel.roomservice.interceptor;
 
 
+import com.uexcel.common.RoomStatus;
 import com.uexcel.common.command.ReserveRoomCommand;
+import com.uexcel.common.command.UpdateRoomForCheckinCommand;
+import com.uexcel.common.command.UpdateRoomInventoryForDateForCheckinCommand;
+import com.uexcel.roomservice.command.repository.RoomRepository;
+import com.uexcel.roomservice.entity.Room;
 import com.uexcel.roomservice.entity.RoomInventoryForDate;
 import com.uexcel.roomservice.command.repository.RoomInventoryForDateRepository;
 import org.axonframework.commandhandling.CommandExecutionException;
@@ -19,9 +24,11 @@ public class CommandHandlerInterceptor
         implements MessageHandlerInterceptor<CommandMessage<?>> {
 
     private final RoomInventoryForDateRepository roomInventoryForDateRepository;
+    private  final RoomRepository roomRepository;
 
-    public CommandHandlerInterceptor(RoomInventoryForDateRepository roomInventoryForDateRepository) {
+    public CommandHandlerInterceptor(RoomInventoryForDateRepository roomInventoryForDateRepository, RoomRepository roomRepository) {
         this.roomInventoryForDateRepository = roomInventoryForDateRepository;
+        this.roomRepository = roomRepository;
     }
 
     @Override
@@ -49,7 +56,49 @@ public class CommandHandlerInterceptor
             }
         }
 
+        if(cmd.getPayload() instanceof UpdateRoomInventoryForDateForCheckinCommand command) {
+            RoomInventoryForDate roomInventoryForDate = roomInventoryForDateRepository
+                    .findByRoomInventoryForDateId(command.getRoomInventoryForDateId());
+            if(roomInventoryForDate == null) {
+//                updateRoomStatus(command.getRoomNumber());
+                throw new CommandExecutionException("Invalid Room Inventory For Date ID!", null);
+            }
+
+            if(!roomInventoryForDate.getAvailabilityDate().isEqual(LocalDate.now())) {
+//                updateRoomStatus(command.getRoomNumber());
+                throw new CommandExecutionException("Invalid date!", null);
+            }
+
+            if(!roomInventoryForDate.getRoomTypeName().equalsIgnoreCase(command.getRoomTypeName())) {
+//                updateRoomStatus(command.getRoomNumber());
+                throw new CommandExecutionException("Room type name mismatched!", null);
+            }
+
+            if(roomInventoryForDate.getAvailableRooms() == 0 && command.getReservationId()==null) {
+//                updateRoomStatus(command.getRoomNumber());
+                throw new CommandExecutionException("The room type is currently unavailable!", null);
+            }
+        }
+
+        if(cmd.getPayload() instanceof UpdateRoomForCheckinCommand command) {
+            Room room = roomRepository.findByRoomNumber(command.getRoomNumber());
+            if(room == null) {
+                throw new CommandExecutionException("Invalid room number!", null);
+            }
+            if(room.getRoomStatus().equals(RoomStatus.occupied) &&
+                    command.getRoomStatus().equals(RoomStatus.occupied)) {
+                throw new CommandExecutionException("Room is not available for check-in!", null);
+            }
+        }
+
         return chain.proceed();
+    }
+
+    private void updateRoomStatus(String roomName){
+        Room room = roomRepository.findByRoomNumber(roomName);
+        room.setRoomStatus(RoomStatus.available);
+        roomRepository.save(room);
+
     }
 
 }

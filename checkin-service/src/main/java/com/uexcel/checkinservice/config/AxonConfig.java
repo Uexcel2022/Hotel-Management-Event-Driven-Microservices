@@ -1,13 +1,10 @@
-package com.uexcel.roomservice.config;
+package com.uexcel.checkinservice.config;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.security.NoTypePermission;
 
-import jakarta.persistence.EntityManager;
 import org.axonframework.common.transaction.TransactionManager;
-import org.axonframework.modelling.saga.repository.jpa.JpaSagaStore;
 import org.axonframework.serialization.Serializer;
-import org.axonframework.serialization.json.JacksonSerializer;
 import org.axonframework.serialization.xml.XStreamSerializer;
 
 import org.axonframework.spring.messaging.unitofwork.SpringTransactionManager;
@@ -22,7 +19,6 @@ public class AxonConfig {
         return new SpringTransactionManager(ptm);
 
     }
-
     @Bean
     public XStream xStream() {
         XStream xStream = new XStream();
@@ -30,23 +26,17 @@ public class AxonConfig {
         xStream.allowTypesByWildcard(new String[]{
                 "com.uexcel.common.command.*",
                 "com.uexcel.common.event.*",
-                "com.uexcel.common.command.error.*",
                 "com.uexcel.common.query.*",
-                "com.uexcel.roomservice.command.*",
-                "com.uexcel.roomservice.command.room.*",
-                "com.uexcel.roomservice.command.roomtype.*",
-                "com.uexcel.roomservice.error.*",
-                "com.uexcel.roomservice.command.interceptor.*",
-                "com.uexcel.roomservice.query.reservationfordate.*",
-                "com.uexcel.roomservice.query.room.*",
-                "com.uexcel.roomservice.query.*",
-                "com.uexcel.roomservice.query.checkin.*",
-                "com.uexcel.roomservice.entity.*",
-                "com.uexcel.roomservice.query.controller.*",
-                "com.uexcel.roomservice.command.controller.*",
-                "com.uexcel.roomservice.command.inventory.*",
+                "com.uexcel.common.command.error.*",
+                "com.uexcel.checkinservice.command.*",
+                "com.uexcel.checkinservice.error.*",
+                "com.uexcel.checkinservice.command.interceptor.*",
+                "com.uexcel.checkinservice.query.*",
+                "com.uexcel.checkinservice.query.checkin.*",
+                "com.uexcel.checkinservice.entity.*",
+                "com.uexcel.checkinservice.query.controller.*",
+                "com.uexcel.checkinservice.command.controller.*",
                 "java.util.*", "java.lang.*"
-
         });
         return xStream;
     }

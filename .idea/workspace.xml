@@ -4,21 +4,56 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="66286c4b-34c6-4244-93c6-87b4a4bc0d56" name="Changes" comment="m7">
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/uexcel/common/query/FindPaymentDetailsQuery.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/uexcel/common/query/PaymentDetailsModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/uexcel/paymentservice/config/AxonConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/uexcel/paymentservice/entity/PaymentDetails.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/src/main/java/com/uexcel/paymentservice/query/PaymentQueryHandler.java" afterDir="false" />
+    <list default="true" id="66286c4b-34c6-4244-93c6-87b4a4bc0d56" name="Changes" comment="m8 - added payment service">
+      <change afterPath="$PROJECT_DIR$/checkin-service/src/main/java/com/uexcel/checkinservice/CheckinStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkin-service/src/main/java/com/uexcel/checkinservice/command/CancelCheckinCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkin-service/src/main/java/com/uexcel/checkinservice/command/CheckinAggregate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkin-service/src/main/java/com/uexcel/checkinservice/command/CheckinCalledEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkin-service/src/main/java/com/uexcel/checkinservice/command/CheckinCreatedEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkin-service/src/main/java/com/uexcel/checkinservice/command/CheckinRejectedEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkin-service/src/main/java/com/uexcel/checkinservice/command/CheckinSucceededEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkin-service/src/main/java/com/uexcel/checkinservice/command/CreateCheckinCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkin-service/src/main/java/com/uexcel/checkinservice/command/RejectCheckinCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkin-service/src/main/java/com/uexcel/checkinservice/command/UpdateCheckinStatusCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkin-service/src/main/java/com/uexcel/checkinservice/command/controller/CancelCheckinRequestModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkin-service/src/main/java/com/uexcel/checkinservice/command/controller/CheckinCommandController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkin-service/src/main/java/com/uexcel/checkinservice/command/controller/CheckinRequestModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkin-service/src/main/java/com/uexcel/checkinservice/config/AxonConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkin-service/src/main/java/com/uexcel/checkinservice/entity/Checkin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkin-service/src/main/java/com/uexcel/checkinservice/query/CheckinQueryHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkin-service/src/main/java/com/uexcel/checkinservice/query/CheckinQueryResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkin-service/src/main/java/com/uexcel/checkinservice/query/ChickenEventHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkin-service/src/main/java/com/uexcel/checkinservice/query/FindCheckinByIdQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkin-service/src/main/java/com/uexcel/checkinservice/query/FindCheckinByRoomNumberQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkin-service/src/main/java/com/uexcel/checkinservice/query/FindUnCheckoutRoomsQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkin-service/src/main/java/com/uexcel/checkinservice/query/controller/CheckinQueryController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkin-service/src/main/java/com/uexcel/checkinservice/query/controller/CheckinSummaryModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkin-service/src/main/java/com/uexcel/checkinservice/repository/CheckinRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkin-service/src/main/java/com/uexcel/checkinservice/saga/DirectCheckinSaga.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/uexcel/common/command/UpdateRoomForCheckinCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/uexcel/common/command/UpdateRoomInventoryForDateForCheckinCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/uexcel/common/event/RoomForCheckinUpdatedEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/uexcel/common/event/RoomInventoryForDateUpdatedForCheckinEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/uexcel/common/query/FindRoomInfoQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/uexcel/common/query/QueryResultSummaryForCheckin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/uexcel/common/query/RoomModelForCheckinQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/query/checkin/CheckinQueryHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/query/checkin/RoomInventoryForDateUpdatedForCheckinEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/query/checkin/RoomStatusUpdatedForCheckinEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/common/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reservation-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/reservation-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/config/AxonConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/config/AxonConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/query/ReservationEventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/query/ReservationEventHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/uexcel/common/RoomStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/uexcel/common/RoomStatus.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/saga/ReservationSaga.java" beforeDir="false" afterPath="$PROJECT_DIR$/reservation-service/src/main/java/com/uexcel/reservationservice/saga/ReservationSaga.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/command/RoomTypeAggregate.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/command/roomtype/RoomTypeAggregate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/command/inventory/RoomInventoryForDateAggregate.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/command/inventory/RoomInventoryForDateAggregate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/command/repository/RoomInventoryForDateRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/command/repository/RoomInventoryForDateRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/command/room/RoomAggregate.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/command/room/RoomAggregate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/command/roomtype/RoomTypeCreatedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/command/roomtype/RoomTypeCreatedEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/config/AxonConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/config/AxonConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/interceptor/CommandHandlerInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/interceptor/CommandHandlerInterceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/query/RoomServiceEventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/room-service/src/main/java/com/uexcel/roomservice/query/RoomServiceEventHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +63,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -67,40 +103,44 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "Spring Boot.PaymentServiceApplication.executor": "Run",
-    "Spring Boot.ReservationServiceApplication.executor": "Run",
-    "Spring Boot.RoomServiceApplication.executor": "Run",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "run.configurations.included.in.services": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;Spring Boot.CheckinServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.PaymentServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ReservationServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.RoomServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.uexcel.checkinservice" />
       <recent name="com.uexcel.common" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.uexcel.common.command" />
+      <recent name="com.uexcel.checkinservice.command" />
       <recent name="com.uexcel.roomservice.query" />
     </key>
   </component>
@@ -118,6 +158,7 @@
         <entry key="SpringBootApplicationConfigurationType">
           <value>
             <map>
+              <entry key="CheckinServiceApplication" value="STOPPED" />
               <entry key="PaymentServiceApplication" value="STOPPED" />
               <entry key="ReservationServiceApplication" value="STOPPED" />
               <entry key="RoomServiceApplication" value="STOPPED" />
@@ -127,7 +168,15 @@
       </map>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.PaymentServiceApplication">
+  <component name="RunManager" selected="Spring Boot.CheckinServiceApplication">
+    <configuration name="CheckinServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="checkin-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.uexcel.checkinservice.CheckinServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="PaymentServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="payment-service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.uexcel.paymentservice.PaymentServiceApplication" />
@@ -169,7 +218,15 @@
       <updated>1770568334616</updated>
       <workItem from="1770568336509" duration="19992000" />
       <workItem from="1770622240919" duration="32929000" />
-      <workItem from="1770710730239" duration="25058000" />
+      <workItem from="1770710730239" duration="32700000" />
+      <workItem from="1770793570470" duration="16232000" />
+      <workItem from="1770845128296" duration="948000" />
+      <workItem from="1770846461305" duration="10731000" />
+      <workItem from="1770897253773" duration="3249000" />
+      <workItem from="1770906090413" duration="23833000" />
+      <workItem from="1771004914549" duration="4973000" />
+      <workItem from="1771011634826" duration="49000" />
+      <workItem from="1771095868158" duration="11465000" />
     </task>
     <task id="LOCAL-00001" summary="m5">
       <option name="closed" value="true" />
@@ -195,7 +252,23 @@
       <option name="project" value="LOCAL" />
       <updated>1770736214993</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="m8 - added payment service">
+      <option name="closed" value="true" />
+      <created>1770748034309</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1770748034309</updated>
+    </task>
+    <task id="LOCAL-00005" summary="m8 - added payment service">
+      <option name="closed" value="true" />
+      <created>1770748043809</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1770748043809</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -216,7 +289,8 @@
     <MESSAGE value="m5" />
     <MESSAGE value="m6" />
     <MESSAGE value="m7" />
-    <option name="LAST_COMMIT_MESSAGE" value="m7" />
+    <MESSAGE value="m8 - added payment service" />
+    <option name="LAST_COMMIT_MESSAGE" value="m8 - added payment service" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

@@ -1,5 +1,6 @@
 package com.uexcel.roomservice.query;
 
+import com.uexcel.common.RoomStatus;
 import com.uexcel.roomservice.entity.RoomInventoryForDate;
 import com.uexcel.roomservice.entity.Room;
 import com.uexcel.roomservice.command.inventory.RoomReservedEvent;
@@ -10,6 +11,10 @@ import com.uexcel.roomservice.command.room.RoomCreatedEvent;
 import com.uexcel.roomservice.entity.RoomType;
 import com.uexcel.roomservice.command.repository.RoomTypeRepository;
 import com.uexcel.roomservice.command.roomtype.RoomTypeCreatedEvent;
+import com.uexcel.roomservice.query.checkin.RoomInventoryForDateUpdatedForCheckinEvent;
+import com.uexcel.roomservice.query.checkin.RoomStatusUpdatedForCheckinEvent;
+import jakarta.transaction.Transactional;
+import org.axonframework.commandhandling.CommandExecutionException;
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
 import org.springframework.beans.BeanUtils;
@@ -51,16 +56,46 @@ public class RoomServiceEventHandler {
         roomInventoryForDateRepository.save(roomInventoryForDate);
     }
 
+    @Transactional
     @EventHandler
     public void onChange(RoomReservedEvent event) {
         RoomInventoryForDate reservedRooms =
                 roomInventoryForDateRepository.findByRoomInventoryForDateId(
                         event.getRoomInventoryForDateId()
                 );
+        if (reservedRooms.getAvailableRooms() == 0) {
+            throw new CommandExecutionException("No more room type available for reservation!", null); }
+
         reservedRooms.setAvailableRooms(
                 reservedRooms.getAvailableRooms()-1
         );
         roomInventoryForDateRepository.save(reservedRooms);
+    }
+
+    @Transactional
+    @EventHandler
+    public void on(RoomInventoryForDateUpdatedForCheckinEvent event) {
+        RoomInventoryForDate roomInventoryForDate =
+                roomInventoryForDateRepository.findByRoomInventoryForDateId(
+                        event.getRoomInventoryForDateId()
+                );
+        if(roomInventoryForDate.getAvailableRooms() == 0){
+            throw new CommandExecutionException("Room type is no more available for check-in!", null);
+        }
+        roomInventoryForDate.setAvailableRooms( roomInventoryForDate.getAvailableRooms()-1);
+        roomInventoryForDateRepository.save(roomInventoryForDate);
+    }
+
+    @Transactional
+    @EventHandler
+    public void on(RoomStatusUpdatedForCheckinEvent event) {
+        Room room = roomRepository.findByRoomNumber(event.getRoomNumber());
+        if(room.getRoomStatus().equals(RoomStatus.occupied) &&
+                event.getRoomStatus().equals(RoomStatus.occupied)) {
+            throw new CommandExecutionException("Room is not available for check-in!", null);
+        }
+        room.setRoomStatus(event.getRoomStatus());
+        roomRepository.save(room);
     }
 }
 

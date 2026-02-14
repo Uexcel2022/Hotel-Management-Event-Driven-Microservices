@@ -1,8 +1,5 @@
-package com.uexcel.roomservice.command;
+package com.uexcel.roomservice.command.roomtype;
 
-import com.uexcel.roomservice.command.room.RoomCreatedEvent;
-import com.uexcel.roomservice.command.roomtype.CreateRoomTypeCommand;
-import com.uexcel.roomservice.command.roomtype.RoomTypeCreatedEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
